@@ -1,4 +1,4 @@
-package modelo;
+package edu.usal.ar.dao.dominio;
 
 import java.util.Date;
 
