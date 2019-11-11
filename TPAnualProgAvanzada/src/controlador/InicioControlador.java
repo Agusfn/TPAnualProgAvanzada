@@ -1,17 +1,12 @@
 package controlador;
 
 import java.awt.EventQueue;
-import java.sql.SQLException;
-import java.util.List;
 
-import dao.implementations.db.PaisDaoImplDB;
-import modelo.Pais;
-import vista.InicioVista;
+import vista.VistaInicio;
 
 public class InicioControlador {
 
-	
-	
+
 	
 	public void mostrarPantallaInicio()
 	{
@@ -23,10 +18,10 @@ public class InicioControlador {
 			public void run() 
 			{
 				
-				InicioVista frame;
+				VistaInicio frame;
 				
 				try {
-					frame = new InicioVista(controlador);
+					frame = new VistaInicio(controlador);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					// TODO mostrar detalles error.
@@ -40,6 +35,7 @@ public class InicioControlador {
 		
 	}
 	
+	/*
 	public List<Pais> obtenerPaises() throws Exception
 	{
 		PaisDaoImplDB paisDao = new PaisDaoImplDB();
@@ -51,5 +47,5 @@ public class InicioControlador {
 		
 		System.out.println("Pepe");
 	}
-	
+	*/
 }
