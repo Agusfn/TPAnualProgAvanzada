@@ -19,7 +19,7 @@ public class VistaInicioActions implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 
-		if(arg0.getSource() == this.vistaInicio.getAgregarPersona()) {
+		if(arg0.getSource() == this.vistaInicio.getAgregarCliente()) {
 			 clienteControlador.mostrarVentanaCrear();
 			
 	 

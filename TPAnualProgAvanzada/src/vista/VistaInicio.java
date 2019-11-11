@@ -1,31 +1,17 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.BoxLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import controlador.InicioControlador;
-
-import com.jgoodies.forms.layout.FormSpecs;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.SpringLayout;
-import javax.swing.JTextField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class VistaInicio extends JFrame {
 
@@ -63,10 +49,7 @@ public class VistaInicio extends JFrame {
 		panel.add(panel_1, BorderLayout.NORTH);
 		
 		btnAgregarPersona = new JButton("Nuevo");
-		btnAgregarPersona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnAgregarPersona.addActionListener(new VistaInicioActions(this));
 		panel_1.add(btnAgregarPersona);
 		
 		textField = new JTextField();
@@ -77,7 +60,7 @@ public class VistaInicio extends JFrame {
 		panel_1.add(btnNewButton_1);
 	}
 	
-	public JButton getAgregarPersona() {
+	public JButton getAgregarCliente() {
 		return this.btnAgregarPersona;
 		
 		
