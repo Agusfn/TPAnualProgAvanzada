@@ -32,6 +32,7 @@ public class VistaInicio extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
+	private JButton btnAgregarPersona;
 
 	/**
 	 * Create the frame.
@@ -61,12 +62,12 @@ public class VistaInicio extends JFrame {
 		flowLayout.setAlignment(FlowLayout.LEFT);
 		panel.add(panel_1, BorderLayout.NORTH);
 		
-		JButton btnNewButton = new JButton("Nuevo");
-		btnNewButton.addActionListener(new ActionListener() {
+		btnAgregarPersona = new JButton("Nuevo");
+		btnAgregarPersona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		panel_1.add(btnNewButton);
+		panel_1.add(btnAgregarPersona);
 		
 		textField = new JTextField();
 		panel_1.add(textField);
@@ -75,5 +76,13 @@ public class VistaInicio extends JFrame {
 		JButton btnNewButton_1 = new JButton("Buscar");
 		panel_1.add(btnNewButton_1);
 	}
+	
+	public JButton getAgregarPersona() {
+		return this.btnAgregarPersona;
+		
+		
+	}
+	
+	
 
 }

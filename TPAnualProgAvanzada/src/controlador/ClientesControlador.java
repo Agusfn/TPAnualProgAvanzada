@@ -1,17 +1,22 @@
 package controlador;
 
-import vista.CrearClienteVista;
-import vista.InicioVista;
+import vista.VistaCliente;
 
 public class ClientesControlador {
 
 	
+	
 	public void mostrarVentanaCrear()
-	{
-		
-		
-		CrearClienteVista frame = new CrearClienteVista(this);
+	{	
+		VistaCliente frame = new VistaCliente(this);
 		frame.setVisible(true);
 	}
+	
+	
+	public void mostrarVentanaModificar()
+	{	
+		
+	}
+	
 	
 }
