@@ -2,6 +2,7 @@ package vista;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,10 +12,14 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controlador.ClientesControlador;
 import controlador.InicioControlador;
+import modelo.Cliente;
 
 public class VistaInicio extends JFrame {
-
+	
+	public ClientesControlador clientesControlador = new ClientesControlador();
+	
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField textField;
@@ -25,6 +30,8 @@ public class VistaInicio extends JFrame {
 	 */
 	
 	public VistaInicio(InicioControlador controlador) {
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		setSize(800, 600);
@@ -39,6 +46,7 @@ public class VistaInicio extends JFrame {
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Clientes", null, panel, null);
 		panel.setLayout(new BorderLayout(0, 0));
+		
 		
 		table = new JTable();
 		panel.add(table, BorderLayout.CENTER);
@@ -58,7 +66,30 @@ public class VistaInicio extends JFrame {
 		
 		JButton btnNewButton_1 = new JButton("Buscar");
 		panel_1.add(btnNewButton_1);
+		
+		
+		recargarTablaClientes();
 	}
+	
+	
+	public void recargarTablaClientes()
+	{
+		List<Cliente> clientes = clientesControlador.obtenerListaClientes();
+				
+		String[] columnas = {"Nombre", "DNI", "Fecha nacimiento", "E-mail"};
+		
+		String[][] datos = new String[clientes.size()][4];
+		
+		for(int i = 0; i<clientes.size(); i++) 
+		{
+			Cliente cliente = clientes.get(i);
+			datos[i] = new String[] {"a"};
+		}
+		
+		
+		System.out.println(datos);
+	}
+	
 	
 	public JButton getAgregarCliente() {
 		return this.btnAgregarPersona;
