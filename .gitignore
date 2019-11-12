@@ -13,7 +13,10 @@ hs_err_pid*
 /bin/
 
 
+.classpath
 /target/
 /*.project
 /.settings
 /*.springBeans
+
+config.properties
