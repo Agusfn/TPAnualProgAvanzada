@@ -20,4 +20,4 @@ serial_provincias=provincias.dat
 serial_telefonos=telefonos.dat
 serial_ventas=ventas.dat
 serial_vuelos=vuelos.dat
-sqlserver_connection_string=jdbc:sqlserver://localhost:54162;databaseName=TPFinalAerolineas;integratedSecurity=false;user=sa;password=20596
+sqlserver_connection_string=jdbc:sqlserver://localhost:54162;databaseName=TPFinalAerolineas;integratedSecurity=false;user=sa;password=12345
