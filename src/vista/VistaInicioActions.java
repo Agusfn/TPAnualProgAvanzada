@@ -7,22 +7,18 @@ import controlador.ClientesControlador;
 
 public class VistaInicioActions implements ActionListener {
 	
-	private VistaInicio vistaInicio;
-	private ClientesControlador clienteControlador;
+	private VistaInicio vista;
 	
 	public VistaInicioActions(VistaInicio vista) {
-		this.vistaInicio = vista;
-		this.clienteControlador = new ClientesControlador();
+		this.vista = vista;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
 
-		if(arg0.getSource() == this.vistaInicio.getAgregarCliente()) {
-			 clienteControlador.mostrarVentanaCrear();
-			
-	 
+		if(arg0.getSource() == this.vista.getAgregarCliente()) {
+			 vista.clientesControlador.mostrarVentanaCrear();
 		}
 		
 		

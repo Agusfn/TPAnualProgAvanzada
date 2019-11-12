@@ -1,7 +1,6 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -10,16 +9,24 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import controlador.AerolineasControlador;
 import controlador.ClientesControlador;
+import controlador.PaisesControlador;
+import modelo.Aerolinea;
+import modelo.Pais;
+import util.ComboItem;
+
 import javax.swing.JSeparator;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import java.awt.Window.Type;
+import java.util.List;
 
 public class VistaCliente extends JFrame {
 
 	private ClientesControlador clienteControlador;
 	
+	public PaisesControlador paisesControlador = new PaisesControlador();
+	public AerolineasControlador aerolineasControlador = new AerolineasControlador();
 	
 	private JPanel contentPane;
 	private JTextField textFieldNombreYApellido;
@@ -40,18 +47,28 @@ public class VistaCliente extends JFrame {
 	private JTextField textFieldPasaporteFechaVto;
 	private JTextField textFieldPasajFrecNro;
 	private JTextField textFieldPasajFrecCategoria;
-
-
+	private JComboBox comboBoxDirPais;
+	private JComboBox comboBoxPasajFrecAerolinea;
+	private JComboBox comboBoxPasajFrecAlianza;
+	private JComboBox comboBoxPasaportePaisEmis;
+	private JButton btnAceptar;
+	
 	/**
 	 * Create the frame.
 	 */
 	public VistaCliente(ClientesControlador clienteControlador) {
-		setResizable(false);
-		setTitle("Cliente");
+		
 		this.clienteControlador = clienteControlador;
 		
+		VistaClienteActions actions = new VistaClienteActions(this);
+		
+		
+		setResizable(false);
+		setTitle("Cliente");
+		
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 842, 518);
+		setBounds(100, 100, 842, 540);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -112,8 +129,9 @@ public class VistaCliente extends JFrame {
 		panel.add(textFieldTelLaboral);
 		textFieldTelLaboral.setColumns(10);
 		
-		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(640, 430, 136, 28);
+		btnAceptar = new JButton("Aceptar");
+		btnAceptar.addActionListener(actions);
+		btnAceptar.setBounds(640, 448, 136, 28);
 		panel.add(btnAceptar);
 		
 		JSeparator separator = new JSeparator();
@@ -160,7 +178,7 @@ public class VistaCliente extends JFrame {
 		panel.add(lblCiudad);
 		
 		JLabel lblPas = new JLabel("Pa\u00EDs");
-		lblPas.setBounds(41, 430, 89, 14);
+		lblPas.setBounds(41, 424, 56, 14);
 		panel.add(lblPas);
 		
 		textFieldDirCiudad = new JTextField();
@@ -184,20 +202,20 @@ public class VistaCliente extends JFrame {
 		
 		textFieldDirProvincia = new JTextField();
 		textFieldDirProvincia.setColumns(10);
-		textFieldDirProvincia.setBounds(276, 393, 112, 20);
+		textFieldDirProvincia.setBounds(107, 452, 281, 20);
 		panel.add(textFieldDirProvincia);
 		
 		JLabel lblProvincia = new JLabel("Provincia");
-		lblProvincia.setBounds(229, 396, 46, 14);
+		lblProvincia.setBounds(41, 455, 46, 14);
 		panel.add(lblProvincia);
 		
 		textFieldDirCodPostal = new JTextField();
 		textFieldDirCodPostal.setColumns(10);
-		textFieldDirCodPostal.setBounds(309, 427, 79, 20);
+		textFieldDirCodPostal.setBounds(309, 393, 79, 20);
 		panel.add(textFieldDirCodPostal);
 		
 		JLabel lblCdPostal = new JLabel("C\u00F3d. postal");
-		lblCdPostal.setBounds(245, 430, 61, 14);
+		lblCdPostal.setBounds(245, 396, 61, 14);
 		panel.add(lblCdPostal);
 		
 		JLabel lblDatosDelPasasporte = new JLabel("Datos del pasasporte");
@@ -218,7 +236,7 @@ public class VistaCliente extends JFrame {
 		lblPasEmisin.setBounds(429, 96, 103, 14);
 		panel.add(lblPasEmisin);
 		
-		JComboBox comboBoxPasaportePaisEmis = new JComboBox();
+		comboBoxPasaportePaisEmis = new JComboBox();
 		comboBoxPasaportePaisEmis.setBounds(538, 93, 238, 20);
 		panel.add(comboBoxPasaportePaisEmis);
 		
@@ -249,8 +267,8 @@ public class VistaCliente extends JFrame {
 		lblFechaVto.setBounds(630, 158, 61, 14);
 		panel.add(lblFechaVto);
 		
-		JComboBox comboBoxDirPais = new JComboBox();
-		comboBoxDirPais.setBounds(107, 427, 128, 20);
+		comboBoxDirPais = new JComboBox();
+		comboBoxDirPais.setBounds(107, 421, 281, 20);
 		panel.add(comboBoxDirPais);
 		
 		JSeparator separator_2 = new JSeparator();
@@ -266,7 +284,7 @@ public class VistaCliente extends JFrame {
 		lblAlianza.setBounds(429, 251, 103, 14);
 		panel.add(lblAlianza);
 		
-		JComboBox comboBoxPasajFrecAerolinea = new JComboBox();
+		comboBoxPasajFrecAerolinea = new JComboBox();
 		comboBoxPasajFrecAerolinea.setBounds(538, 282, 238, 20);
 		panel.add(comboBoxPasajFrecAerolinea);
 		
@@ -283,7 +301,7 @@ public class VistaCliente extends JFrame {
 		textFieldPasajFrecNro.setBounds(538, 313, 238, 20);
 		panel.add(textFieldPasajFrecNro);
 		
-		JComboBox comboBoxPasajFrecAlianza = new JComboBox();
+		comboBoxPasajFrecAlianza = new JComboBox();
 		comboBoxPasajFrecAlianza.setBounds(538, 246, 238, 20);
 		panel.add(comboBoxPasajFrecAlianza);
 		
@@ -295,5 +313,56 @@ public class VistaCliente extends JFrame {
 		textFieldPasajFrecCategoria.setColumns(10);
 		textFieldPasajFrecCategoria.setBounds(538, 346, 238, 20);
 		panel.add(textFieldPasajFrecCategoria);
+		
+		
+		cargarAerolineasEnCampos();
+		cargarPaisesEnCampos();
 	}
+	
+	
+	/**
+	 * 
+	 */
+	public void cargarAerolineasEnCampos()
+	{
+		List<Aerolinea> aerolineas = aerolineasControlador.obtenerTodas();
+		
+		comboBoxPasajFrecAerolinea.addItem(new ComboItem(-1, "Seleccionar"));
+		
+		for(Aerolinea aerolinea: aerolineas) {
+			ComboItem item = new ComboItem(aerolinea.getId(), aerolinea.getNombre());
+			comboBoxPasajFrecAerolinea.addItem(item);
+		}		
+		
+	}
+	
+	
+	/*
+	 * Cargar comboboxes de pais de dirección cliente, y de país de emisión de pasaporte, con los países existentes.
+	 */
+	public void cargarPaisesEnCampos()
+	{
+		List<Pais> paises = paisesControlador.obtenerTodos();
+		
+		ComboItem item = new ComboItem(-1, "Seleccionar");
+		comboBoxDirPais.addItem(item);
+		comboBoxPasaportePaisEmis.addItem(item);
+		
+		for(Pais pais: paises) {
+			item = new ComboItem(pais.getId(), pais.getNombre());
+			comboBoxDirPais.addItem(item);
+			comboBoxPasaportePaisEmis.addItem(item);
+		}
+
+		
+	}
+	
+	
+	public JButton getAceptarBtn()
+	{
+		return this.btnAceptar;
+	}
+	
+	
+	
 }

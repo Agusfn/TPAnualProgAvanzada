@@ -20,12 +20,23 @@ public class ClientesControlador {
 	}
 	
 	
+	/**
+	 * Mostrar ventana para dar de alta nuevo cliente.
+	 */
 	public void mostrarVentanaCrear()
 	{	
-		VistaCliente frame = new VistaCliente(this);
-		frame.setVisible(true);
+		VistaCliente vista = new VistaCliente(this);
+		vista.setVisible(true);
 	}
 	
+	/**
+	 * Mostrar ventana para dar de alta nuevo cliente.
+	 */
+	public void mostrarVentanaModificar(int idCliente)
+	{	
+		VistaCliente vista = new VistaCliente(this);
+		vista.setVisible(true);
+	}
 	
 	/**
 	 * Obtener listado de clientes, con pasaportes.
@@ -59,10 +70,6 @@ public class ClientesControlador {
 	}
 	
 	
-	public void mostrarVentanaModificar()
-	{	
-		
-	}
 	
 	
 }
