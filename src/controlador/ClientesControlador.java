@@ -1,11 +1,11 @@
 package controlador;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import dao.factory.ClienteFactory;
-import dao.implementations.db.ClienteDaoImplDB;
+import dao.factory.PasaporteFactory;
 import dao.interfaces.IClienteDao;
+import dao.interfaces.IPasaporteDao;
 import modelo.Cliente;
 import vista.VistaCliente;
 
@@ -27,16 +27,31 @@ public class ClientesControlador {
 	}
 	
 	
-	public List<Cliente> obtenerListaClientes()
+	/**
+	 * Obtener listado de clientes, con pasaportes.
+	 * @return
+	 */
+	public List<Cliente> obtenerTodosConPasaportes()
 	{
 		try {
 			
-			ClienteDaoImplDB clienteDao = new ClienteDaoImplDB();
+			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
+			List<Cliente> clientes = clienteDao.obtenerTodos();
+			clienteDao.close();
 			
-			return clienteDao.obtenerTodos();
+			// Asignamos pasaporte
+			IPasaporteDao pasaporteDao = PasaporteFactory.getImplementation("db");
+			
+			for(Cliente cliente: clientes) {
+				cliente.setPasaporte(pasaporteDao.obtener(cliente.getPasaporte().getId()));
+			}
+			
+			pasaporteDao.close();
+			
+			return clientes;
 			
 			
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
