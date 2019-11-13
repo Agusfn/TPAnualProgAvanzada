@@ -22,6 +22,7 @@ import controlador.ClientesControlador;
 import controlador.InicioControlador;
 import controlador.PaisesControlador;
 import controlador.ProvinciasControlador;
+import controlador.VueloControlador;
 import modelo.Aerolinea;
 import modelo.Aeropuerto;
 import modelo.Cliente;
@@ -35,7 +36,7 @@ public class VistaInicio extends JFrame {
 	public AeropuertosControlador aeropuertosControlador = new AeropuertosControlador();
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
 	public AerolineasControlador aerolineaControlador = new AerolineasControlador();
-	
+
 	
 	private JPanel contentPane;
 	private JTable tableClientes;
