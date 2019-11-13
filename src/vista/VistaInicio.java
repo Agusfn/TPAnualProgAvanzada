@@ -253,7 +253,22 @@ public class VistaInicio extends JFrame {
 		for(int i = 0; i<aeropuertos.size(); i++) 
 		{
 			Aeropuerto aerop = aeropuertos.get(i);
-			datos[i] = new String[] { aerop.getIdentificacion(), aerop.getCiudad(), aerop.getProvincia().getNombre(), aerop.getPais().getNombre() };
+			
+			String nombreProvincia;
+			if(aerop.getProvincia() == null) {
+				nombreProvincia = aerop.getNombreProvincia();				
+			} else {
+				nombreProvincia = aerop.getProvincia().getNombre();
+			}
+			
+			String nombrePais;
+			if(aerop.getPais() == null) {
+				nombrePais = aerop.getNombrePais();
+			} else {
+				nombrePais = aerop.getPais().getNombre();
+			}
+			
+			datos[i] = new String[] { aerop.getIdentificacion(), aerop.getCiudad(), nombreProvincia, nombrePais };
 		}
 		
 		recargarDatosTabla(tableAeropuertos, columnas, datos);

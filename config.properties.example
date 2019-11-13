@@ -1,5 +1,6 @@
 csv_aerolineas=aerolineas.txt
 csv_aeropuertos=aeropuertos.txt
+csv_alianzas=alianzas.txt
 csv_clientes=clientes.txt
 csv_direcciones=direcciones.txt
 csv_paises=paises.txt

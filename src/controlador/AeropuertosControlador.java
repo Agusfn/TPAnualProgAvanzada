@@ -30,9 +30,19 @@ public class AeropuertosControlador {
 			IPaisDao paisDao = PaisFactory.getImplementation("db");
 			IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("db");
 			
-			for(Aeropuerto aerop: aeropuertos) {
-				aerop.setPais(paisDao.obtener(aerop.getPais().getId()));
-				aerop.setProvincia(provinciaDao.obtener(aerop.getProvincia().getId()));
+			for(Aeropuerto aerop: aeropuertos) 
+			{
+				
+				// Puede no tener provincia o pais asociado (se debe usar getNombreProvincia() o getNombrePais())
+				
+				if(aerop.getPais() != null) {
+					aerop.setPais(paisDao.obtener(aerop.getPais().getId()));
+				}
+				
+				if(aerop.getProvincia() != null) {
+					aerop.setProvincia(provinciaDao.obtener(aerop.getProvincia().getId()));
+				}
+				
 			}
 			
 			paisDao.close();
