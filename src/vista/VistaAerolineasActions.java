@@ -3,6 +3,8 @@ package vista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import modelo.Aerolinea;
 import modelo.Alianza;
 import util.ComboItem;
@@ -16,31 +18,50 @@ private VistaAerolinea vista;
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(ActionEvent arg0) 
+	{
 		if(arg0.getSource() == vista.getAceptarBtn()) 
-			{
-				boolean validarFormulario = true; //validarFormulario()
+		{
 				
-				if(validarFormulario) {
-					procesarEnvioFormulario();
-					
-					this.vista.aerolineasControlador.vistaInicio.recargarTablaAerolineas();
-					
-					
-					vista.setVisible(false);
-					vista.dispose();
-				}
+			if(validarFormulario()) {
+				procesarEnvioFormulario();
+				
+				this.vista.aerolineasControlador.vistaInicio.recargarTablaAerolineas();
+				
+				
+				vista.setVisible(false);
+				vista.dispose();
 			}
+		}
 	}
 	
 	
+	public boolean validarFormulario() 
+	{
+		
+		if(vista.getTextField_nombre().getText().equals("")) {
+			tirarError("Ingresa el nombre de la aerolinea.");
+			return false;
+		}
+		
+		if(vista.getComboBox_alianza().getSelectedIndex() == 0) {
+			tirarError("Selecciona una alianza.");
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
 	public void procesarEnvioFormulario()
 	{
-		Alianza alianza = crearAlianzaDesdeCampos();
 		
 		Aerolinea aerolinea = new Aerolinea();	
 		aerolinea.setNombre(vista.getTextField_nombre().getText());
-		aerolinea.setAlianza(alianza);
+		
+		if(vista.getComboBox_alianza().getSelectedIndex() >= 2) { // Seleccinó alianza.
+			aerolinea.setAlianza(crearAlianzaDesdeCampos());
+		}
 		
 		vista.getAerolineasControlador().crearAerolinea(aerolinea);
 		
@@ -56,7 +77,9 @@ private VistaAerolinea vista;
 	}
 	
 
-	
+	private void tirarError(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
+	}
 
 	
 	

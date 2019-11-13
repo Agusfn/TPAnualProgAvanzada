@@ -25,9 +25,8 @@ public class VistaAerolinea extends JFrame {
 	private JPanel contentPane;
 	private JButton btnAceptar;
 	private JComboBox comboBox_alianza;
-	
-	
 	private JTextField textField_nombre;
+	
 	public JButton getAceptarBtn()
 	{
 		return this.btnAceptar;
@@ -104,11 +103,13 @@ public class VistaAerolinea extends JFrame {
 		
 		List<Alianza> alianzas = alianzasControlador.obtenerTodas();
 		
-		ComboItem item = new ComboItem(-1, "Seleccionar");
-		comboBox_alianza.addItem(item);
 
+		comboBox_alianza.addItem(new ComboItem(-1, "Seleccionar"));
+		comboBox_alianza.addItem(new ComboItem(0, "Sin alianza"));
+
+		
 		for(Alianza alianza: alianzas) {
-			item = new ComboItem(alianza.getId(), alianza.getNombre());
+			ComboItem item = new ComboItem(alianza.getId(), alianza.getNombre());
 			comboBox_alianza.addItem(item);
 		}
 		

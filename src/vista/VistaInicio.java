@@ -48,7 +48,6 @@ public class VistaInicio extends JFrame {
 	public JTable tableClientes;
 	public JButton btnCrearCliente;
 	public JTable tableAerolineas;
-	public JTextField textFieldBuscarAerolinea;
 	public JTable tableVuelos;
 	public JTable tableVentas;
 	public JTable tableProvincias;
@@ -130,13 +129,6 @@ public class VistaInicio extends JFrame {
 		btnCrearAerolinea.addActionListener(actions);
 		panel_8.add(btnCrearAerolinea);
 		
-		textFieldBuscarAerolinea = new JTextField();
-		panel_8.add(textFieldBuscarAerolinea);
-		textFieldBuscarAerolinea.setColumns(10);
-		
-		JButton btnBuscarAerolinea = new JButton("Buscar");
-		panel_8.add(btnBuscarAerolinea);
-		
 		JScrollPane scrollPane_5 = new JScrollPane();
 		panel_2.add(scrollPane_5, BorderLayout.CENTER);
 		
@@ -154,9 +146,6 @@ public class VistaInicio extends JFrame {
 		JPanel panel_9 = new JPanel();
 		panel_3.add(panel_9, BorderLayout.NORTH);
 		panel_9.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		
-		JButton btnCrearVuelo = new JButton("Nuevo vuelo");
-		panel_9.add(btnCrearVuelo);
 		
 		JScrollPane scrollPane_4 = new JScrollPane();
 		panel_3.add(scrollPane_4, BorderLayout.CENTER);
