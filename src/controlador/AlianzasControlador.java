@@ -1,9 +1,11 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.factory.AlianzaFactory;
 import dao.factory.PasaporteFactory;
+import dao.implementations.archivo.AlianzaDaoImplArchivo;
 import dao.implementations.db.AlianzaDaoImplDB;
 import dao.interfaces.IAlianzaDao;
 import dao.interfaces.IPasaporteDao;
@@ -15,11 +17,12 @@ public class AlianzasControlador {
 	
 	
 	public List<Alianza> obtenerTodas()
-	{
-		
-		
+	{		
 		try {
-			AlianzaDaoImplDB alianzaDao = new AlianzaDaoImplDB();
+			AlianzaDaoImplArchivo alianzaDao = new AlianzaDaoImplArchivo();
+			
+			//List<Alianza> adsf = alianzaDao.obtenerTodos();
+			
 			
 			return alianzaDao.obtenerTodos();
 			

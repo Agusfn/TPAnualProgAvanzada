@@ -22,7 +22,7 @@ private VistaAerolinea vista;
 				boolean validarFormulario = true; //validarFormulario()
 				if(validarFormulario) {
 					procesarEnvioFormulario();
-					vista.getAerolineasControlador().vistaInicio.recargarTablaAerolineas();
+					//vista.getAerolineasControlador().vistaInicio.recargarTablaAerolineas();
 					vista.setVisible(false);
 					vista.dispose();
 				}
@@ -49,7 +49,7 @@ private VistaAerolinea vista;
 		aerolinea.setNombre(vista.getTextField_nombre().getText());
 		aerolinea.setAlianza(alianza);
 		
-		vista.getAerolineasControlador().crearAerolinea(aerolinea);
+		//vista.getAerolineasControlador().crearAerolinea(aerolinea);
 		
 	}
 	

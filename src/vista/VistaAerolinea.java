@@ -32,7 +32,7 @@ public class VistaAerolinea extends JFrame {
 		return this.btnAceptar;
 	}
 	public JTextField getTextField_nombre(){
-		return this.getTextField_nombre();
+		return this.textField_nombre;
 	}
 	
 	public JComboBox getComboBox_alianza(){
@@ -99,6 +99,7 @@ public class VistaAerolinea extends JFrame {
 	
 	public void cargarAlianzaEnCampos()
 	{
+		
 		List<Alianza> alianzas = alianzasControlador.obtenerTodas();
 		
 		ComboItem item = new ComboItem(-1, "Seleccionar");
@@ -108,6 +109,7 @@ public class VistaAerolinea extends JFrame {
 			item = new ComboItem(alianza.getId(), alianza.getNombre());
 			comboBox_alianza.addItem(item);
 		}
+		
 		
 	}
 }
