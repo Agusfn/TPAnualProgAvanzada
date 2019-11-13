@@ -22,6 +22,7 @@ import controlador.ClientesControlador;
 import controlador.InicioControlador;
 import controlador.PaisesControlador;
 import controlador.ProvinciasControlador;
+import modelo.Aerolinea;
 import modelo.Aeropuerto;
 import modelo.Cliente;
 import modelo.Pais;
@@ -220,6 +221,7 @@ public class VistaInicio extends JFrame {
 		recargarTablaProvincias();
 		recargarTablaPaises();
 		recargarTablaAeropuertos();
+		recargarTablaAerolineas();
 		
 	}
 	
@@ -249,6 +251,44 @@ public class VistaInicio extends JFrame {
 		
 		recargarDatosTabla(tableClientes, columnas, datos);
 	}
+	
+	
+	
+	
+	
+
+	/**
+	 * Obtener Aerolineas y cargarlos en la tabla.
+	 */
+	public void recargarTablaAerolineas()
+	{
+		List<Aerolinea> aerolineas = aerolineaControlador.obtenerTodosConAlianza();
+				
+		String[] columnas = {"Nombre Aerolinea", "Nombre Alianza"};
+		
+		String[][] datos = new String[aerolineas.size()][5];
+		
+		for(int i = 0; i<aerolineas.size(); i++) 
+		{
+			Aerolinea aerolinea = aerolineas.get(i);
+			datos[i] = new String[] { aerolinea.getNombre(), aerolinea.getAlianza().getNombre()
+			};
+		}
+		
+		recargarDatosTabla(tableAerolineas, columnas, datos);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
