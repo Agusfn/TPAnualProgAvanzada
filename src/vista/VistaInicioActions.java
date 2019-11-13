@@ -51,6 +51,10 @@ public class VistaInicioActions implements ActionListener {
 			int dialogResult = JOptionPane.showConfirmDialog (null, "¿Eliminar?","", JOptionPane.YES_NO_OPTION);
 			if(dialogResult == JOptionPane.YES_OPTION)
 			{
+				if(vista.clientesControlador.tieneVentasAsociadas(idCliente)) {
+					JOptionPane.showMessageDialog(null, "El cliente tiene ventas asociadas, no se puede eliminar.");
+					return;
+				}
 				vista.clientesControlador.eliminarClientePorId(idCliente);
 				vista.recargarTablaClientes();
 			}

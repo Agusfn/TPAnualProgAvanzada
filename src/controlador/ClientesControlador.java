@@ -7,16 +7,19 @@ import dao.factory.DireccionFactory;
 import dao.factory.PasajeroFrecuenteFactory;
 import dao.factory.PasaporteFactory;
 import dao.factory.TelefonoFactory;
+import dao.factory.VentaFactory;
 import dao.interfaces.IClienteDao;
 import dao.interfaces.IDireccionDao;
 import dao.interfaces.IPasajeroFrecuenteDao;
 import dao.interfaces.IPasaporteDao;
 import dao.interfaces.ITelefonoDao;
+import dao.interfaces.IVentaDao;
 import modelo.Cliente;
 import modelo.Direccion;
 import modelo.PasajeroFrecuente;
 import modelo.Pasaporte;
 import modelo.Telefono;
+import modelo.Venta;
 import vista.VistaCliente;
 import vista.VistaInicio;
 
@@ -214,6 +217,29 @@ public class ClientesControlador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	
+	public boolean tieneVentasAsociadas(int idCliente)
+	{
+		try {
+			IVentaDao ventaDao = VentaFactory.getImplementation("db");
+			
+			List<Venta> ventas = ventaDao.obtenerTodos();
+			
+			for(Venta venta: ventas) {
+				if(venta.getCliente().getId() == idCliente) {
+					return true;
+				}
+			}
+			
+			return false;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return true;
 		}
 	}
 	
