@@ -1,29 +1,39 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
+import java.util.List;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import controlador.AerolineasControlador;
+import controlador.VueloControlador;
+import modelo.Aerolinea;
+import util.ComboItem;
 
 public class VistaVuelo extends JFrame {
 
+	private VueloControlador vueloControlador;
+	public AerolineasControlador aerolineasControlador = new AerolineasControlador();
+	
 	private JPanel contentPane;
 	private JTextField textFieldNroVuelo;
 	private JTextField textFieldTiempoVueloMins;
 	private JTextField textFieldFechaHoraSalida;
 	private JTextField textFieldFechaHoraLlegada;
 	private JTextField textFieldCantidadAsientos;
-
+	private JComboBox comboBoxAeropSalida;
+	private JComboBox comboBoxAeropLlegada;
+	private JButton btnAceptar;
 	/**
-	 * Launch the application.
-	 */
+	 * Launch the application.*
+	 */ /*
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,7 +50,13 @@ public class VistaVuelo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public VistaVuelo() {
+	public VistaVuelo(VueloControlador vueloControlador) {
+		
+		this.vueloControlador = vueloControlador;
+		
+		VistaVueloActions actions = new VistaVueloActions(this);
+		
+		
 		setResizable(false);
 		setTitle("Vuelo");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -103,11 +119,11 @@ public class VistaVuelo extends JFrame {
 		lblFechaYHora.setBounds(27, 174, 103, 14);
 		panel.add(lblFechaYHora);
 		
-		JComboBox comboBoxAeropSalida = new JComboBox();
+		comboBoxAeropSalida = new JComboBox();
 		comboBoxAeropSalida.setBounds(144, 84, 230, 20);
 		panel.add(comboBoxAeropSalida);
 		
-		JComboBox comboBoxAeropLlegada = new JComboBox();
+		comboBoxAeropLlegada = new JComboBox();
 		comboBoxAeropLlegada.setBounds(144, 115, 230, 20);
 		panel.add(comboBoxAeropLlegada);
 		
@@ -123,5 +139,33 @@ public class VistaVuelo extends JFrame {
 		JButton btnAceptar = new JButton("Aceptar");
 		btnAceptar.setBounds(320, 255, 95, 23);
 		panel.add(btnAceptar);
+	
+	
+		cargarAerolineasEnCampos();
+	
 	}
+	
+	
+	public void cargarAerolineasEnCampos()
+	{
+		List<Aerolinea> aerolineas = aerolineasControlador.obtenerTodas();
+		
+		comboBoxAeropSalida.addItem(new ComboItem(-1, "Seleccionar"));
+		comboBoxAeropLlegada.addItem(new ComboItem(-1, "Seleccionar"));
+		
+		for(Aerolinea aerolinea: aerolineas) {
+			ComboItem item = new ComboItem(aerolinea.getId(), aerolinea.getNombre());
+			comboBoxAeropSalida.addItem(item);
+			comboBoxAeropLlegada.addItem(item);
+		}		
+		
+	}
+	
+	
+	public JButton getAceptarBtn()
+	{
+		return this.btnAceptar;
+	}
+	
+	
 }
