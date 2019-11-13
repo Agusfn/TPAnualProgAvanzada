@@ -58,6 +58,8 @@ public class VistaInicio extends JFrame {
 	public JButton btnCrearAerolinea;
 	public JButton btnModificarCliente;
 	public JButton btnEliminarCliente;
+	public JButton btnCrearVenta;
+	
 	
 	/**
 	 * Create the frame.
@@ -180,7 +182,8 @@ public class VistaInicio extends JFrame {
 		panel_4.add(panel_10, BorderLayout.NORTH);
 		panel_10.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JButton btnCrearVenta = new JButton("Alta venta");
+		btnCrearVenta = new JButton("Alta venta");
+		btnCrearVenta.addActionListener(actions);
 		panel_10.add(btnCrearVenta);
 		
 		JButton btnDetallesVenta = new JButton("Ver detalles");

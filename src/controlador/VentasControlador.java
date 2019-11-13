@@ -13,6 +13,7 @@ import dao.interfaces.IVueloDao;
 import modelo.Aeropuerto;
 import modelo.Venta;
 import vista.VistaInicio;
+import vista.VistaVenta;
 
 public class VentasControlador {
 
@@ -22,6 +23,17 @@ public class VentasControlador {
 	public VentasControlador(VistaInicio vistaInicio) {
 		this.vistaInicio = vistaInicio;
 	}
+	
+	
+	public void mostrarVentanaRegistrarVenta()
+	{
+		VistaVenta vistaVenta = new VistaVenta(this);
+		vistaVenta.setVisible(true);
+		
+	}
+	
+	
+	
 	
 	
 	/**

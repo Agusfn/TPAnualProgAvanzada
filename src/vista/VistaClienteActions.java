@@ -22,9 +22,6 @@ public class VistaClienteActions implements ActionListener {
 
 	private VistaCliente vista;
 	
-	private boolean customDirPais = false;
-	private boolean customDirProvincia = true;
-	private boolean customPsprtPais = false;
 	
 	public VistaClienteActions(VistaCliente vista) {
 		this.vista = vista;
@@ -53,21 +50,17 @@ public class VistaClienteActions implements ActionListener {
 			if(item.getValue().equals("Otros")) {
 				vista.getTextFieldPaisPersonaliz().setVisible(true);
 				vista.getLblPaisPersonaliz().setVisible(true);
-				customDirPais = true;
 			} else {
 				vista.getTextFieldPaisPersonaliz().setVisible(false);
 				vista.getLblPaisPersonaliz().setVisible(false);
-				customDirPais = false;
 			}
 			
 			if(item.getValue().equals("Argentina")) {
 				vista.getTextFieldDirProvinciaCustom().setVisible(false);
 				vista.getComboBoxDirProvincia().setVisible(true);
-				customDirProvincia = false;
 			} else {
 				vista.getTextFieldDirProvinciaCustom().setVisible(true);
 				vista.getComboBoxDirProvincia().setVisible(false);
-				customDirProvincia = true;
 			}
 			
 			
@@ -81,11 +74,9 @@ public class VistaClienteActions implements ActionListener {
 			if(item.getValue().equals("Otros")) {
 				vista.getTextFieldPsprtPaisPersonaliz().setVisible(true);
 				vista.getLblPsprtPaisPersonaliz().setVisible(true);
-				customPsprtPais = true;
 			} else {
 				vista.getTextFieldPsprtPaisPersonaliz().setVisible(false);
 				vista.getLblPsprtPaisPersonaliz().setVisible(false);
-				customPsprtPais = false;
 			}
 			
 		}
@@ -335,20 +326,25 @@ public class VistaClienteActions implements ActionListener {
 		direccion.setCiudad(vista.textFieldDirCiudad.getText());
 		direccion.setCodigoPostal(vista.textFieldDirCodPostal.getText());
 		
-		if(customDirPais) {
+		
+		ComboItem itemPais = (ComboItem)vista.comboBoxDirPais.getSelectedItem();
+		
+		if(itemPais.getValue().equals("Otros"))  {  // pais custom
 			direccion.setNombrePais(vista.textFieldPaisPersonaliz.getText());
+			direccion.setPais(null);
 		} else {
-			ComboItem item = (ComboItem)vista.comboBoxDirPais.getSelectedItem();
-			int idPais = item.getKey();
-			direccion.setPais(new Pais(idPais));
+			direccion.setPais(new Pais(itemPais.getKey()));
+			direccion.setNombrePais(null);
 		}
 		
-		if(customDirProvincia) {
+		
+		if(!itemPais.getValue().equals("Argentina")) { // not Argentina
 			direccion.setNombreProvincia(vista.textFieldDirProvinciaCustom.getText());
-		} else {
-			ComboItem item = (ComboItem)vista.comboBoxDirProvincia.getSelectedItem();
-			int idProvincia = item.getKey();
-			direccion.setProvincia(new Provincia(idProvincia));
+			direccion.setProvincia(null);
+		} else { // Argentina
+			ComboItem itemProvincia = (ComboItem)vista.comboBoxDirProvincia.getSelectedItem();
+			direccion.setProvincia(new Provincia(itemProvincia.getKey()));
+			direccion.setNombreProvincia(null);
 		}
 		
 	}
@@ -359,12 +355,14 @@ public class VistaClienteActions implements ActionListener {
 		pasaporte.setNumero(vista.textFieldPasaporteNro.getText());
 		pasaporte.setAutoridadEmision(vista.textFieldPasaporteAutoridadEmis.getText());
 		
-		if(customPsprtPais) {
+		ComboItem itemPaisPssprt = (ComboItem)vista.getComboBoxPasaportePaisEmis().getSelectedItem();
+		
+		if(itemPaisPssprt.getValue().equals("Otros")) {
+			pasaporte.setPaisEmision(null);
 			pasaporte.setNombrePaisEmision(vista.textFieldPsprtPaisPersonaliz.getText());
 		} else {
-			ComboItem item = (ComboItem)vista.comboBoxPasaportePaisEmis.getSelectedItem();
-			int idPais = item.getKey();
-			pasaporte.setPaisEmision(new Pais(idPais));
+			pasaporte.setPaisEmision(new Pais(itemPaisPssprt.getKey()));
+			pasaporte.setNombrePaisEmision(null);
 		}
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");

@@ -63,6 +63,13 @@ public class VistaInicioActions implements ActionListener {
 		{
 			vista.aerolineaControlador.mostrarVentanaCrear();
 		}
+
+		// *********** VENTAS ***********
+		
+		
+		else if(arg0.getSource() == this.vista.btnCrearVenta) {
+			this.vista.ventasControlador.mostrarVentanaRegistrarVenta();
+		}
 		
 	}
 	
