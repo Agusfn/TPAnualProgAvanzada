@@ -36,6 +36,7 @@ public class VistaInicio extends JFrame {
 	public AeropuertosControlador aeropuertosControlador = new AeropuertosControlador();
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
 	public AerolineasControlador aerolineaControlador = new AerolineasControlador();
+	public VueloControlador vueloControlador = new VueloControlador();
 
 	
 	private JPanel contentPane;
