@@ -3,8 +3,6 @@ package vista;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import controlador.ClientesControlador;
-
 public class VistaInicioActions implements ActionListener {
 	
 	private VistaInicio vista;
@@ -21,6 +19,9 @@ public class VistaInicioActions implements ActionListener {
 			 vista.clientesControlador.mostrarVentanaCrear();
 		}
 		
+		if(arg0.getSource() ==  this.vista.getAgregarAerolinea()) {
+			vista.aerolineaControlador.mostrarVentanaCrear();
+		}
 		
 	}
 	

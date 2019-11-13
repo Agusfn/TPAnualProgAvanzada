@@ -5,15 +5,18 @@ import java.awt.FlowLayout;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import controlador.AerolineasControlador;
 import controlador.AeropuertosControlador;
 import controlador.ClientesControlador;
 import controlador.InicioControlador;
@@ -24,15 +27,14 @@ import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
 
-import javax.swing.JScrollPane;
-import javax.swing.BoxLayout;
-
 public class VistaInicio extends JFrame {
 	
 	public ClientesControlador clientesControlador = new ClientesControlador();
 	public PaisesControlador paisesControlador = new PaisesControlador();
 	public AeropuertosControlador aeropuertosControlador = new AeropuertosControlador();
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
+	public AerolineasControlador aerolineaControlador = new AerolineasControlador();
+	
 	
 	private JPanel contentPane;
 	private JTable tableClientes;
@@ -47,6 +49,8 @@ public class VistaInicio extends JFrame {
 	private JTable tableProvincias;
 	private JTable tablePaises;
 	private JTable tableAeropuertos;
+	private JButton btnCrearAerolinea;
+	
 
 	/**
 	 * Create the frame.
@@ -63,9 +67,11 @@ public class VistaInicio extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+				
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		
+		//################ CLIENTE ##############################\\
 		
 		JPanel panel = new JPanel();
 		tabbedPane.addTab("Clientes", null, panel, null);
@@ -95,15 +101,19 @@ public class VistaInicio extends JFrame {
 		tableClientes.setFillsViewportHeight(true);
 		scrollPane_6.setViewportView(tableClientes);
 		
+		
+		//################### AEROLINEAS ################################# \\
+		
 		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("Aerolineas", null, panel_2, null);
+		tabbedPane.addTab("Aerol\u00EDneas", null, panel_2, null);
 		panel_2.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_8 = new JPanel();
 		panel_2.add(panel_8, BorderLayout.NORTH);
 		panel_8.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JButton btnCrearAerolinea = new JButton("Nueva aerol\u00EDnea");
+		btnCrearAerolinea = new JButton("Nueva aerol\u00EDnea");
+		btnCrearAerolinea.addActionListener(new VistaInicioActions(this));
 		panel_8.add(btnCrearAerolinea);
 		
 		textFieldBuscarAerolinea = new JTextField();
@@ -119,6 +129,8 @@ public class VistaInicio extends JFrame {
 		tableAerolineas = new JTable();
 		tableAerolineas.setFillsViewportHeight(true);
 		scrollPane_5.setViewportView(tableAerolineas);
+		
+		//####################################################################\\
 		
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("Vuelos", null, panel_3, null);
@@ -318,6 +330,10 @@ public class VistaInicio extends JFrame {
 	public JButton getAgregarCliente() {
 		return this.btnCrearCliente;
 		
+	}
+	
+	public JButton getAgregarAerolinea() {
+		return this.btnCrearAerolinea;
 		
 	}
 	

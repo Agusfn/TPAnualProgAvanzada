@@ -1,39 +1,35 @@
 package vista;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JComboBox;
 
-public class VistaLineasAereas extends JFrame {
+import controlador.AerolineasControlador;
+
+public class VistaAerolinea extends JFrame {
 
 	private JPanel contentPane;
+	private AerolineasControlador aerolineasControlador;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaLineasAereas frame = new VistaLineasAereas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+
 
 	/**
 	 * Create the frame.
 	 */
-	public VistaLineasAereas() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public VistaAerolinea(AerolineasControlador aerolineasControlador) {
+		
+		this.aerolineasControlador = aerolineasControlador;
+		VistaAerolineasActions actions = new VistaAerolineasActions(this);
+		
+		setResizable(false);
+		setTitle("Nueva Aerolínea");
+		
+		
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -44,7 +40,7 @@ public class VistaLineasAereas extends JFrame {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nombre de Aerolinea");
+		JLabel lblNewLabel = new JLabel("Nombre de Aerolínea");
 		lblNewLabel.setBounds(20, 11, 115, 14);
 		panel.add(lblNewLabel);
 		
