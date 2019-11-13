@@ -20,9 +20,12 @@ private VistaAerolinea vista;
 		if(arg0.getSource() == vista.getAceptarBtn()) 
 			{
 				boolean validarFormulario = true; //validarFormulario()
+				
 				if(validarFormulario) {
 					procesarEnvioFormulario();
-					//vista.getAerolineasControlador().vistaInicio.recargarTablaAerolineas();
+					
+					
+					vista.getAerolineasControlador().vistaInicio.recargarTablaAerolineas();
 					vista.setVisible(false);
 					vista.dispose();
 				}
@@ -34,32 +37,20 @@ private VistaAerolinea vista;
 	{
 		Alianza alianza = crearAlianzaDesdeCampos();
 		
-		//vista.alianzasControlador.crearAlianza(alianza);
-
-		ComboItem item = (ComboItem)vista.getComboBox_alianza().getSelectedItem();
-		
-		/*
-		if(item.getKey() != -1) {
-			pasajFrec = crearPasajeroFrecuenteDesdeCampos();
-			vista.pasajFrecControlador.crearPasajeroFrecuente(pasajFrec);
-		}
-		*/
-		
 		Aerolinea aerolinea = new Aerolinea();	
 		aerolinea.setNombre(vista.getTextField_nombre().getText());
 		aerolinea.setAlianza(alianza);
 		
-		//vista.getAerolineasControlador().crearAerolinea(aerolinea);
+		vista.getAerolineasControlador().crearAerolinea(aerolinea);
+		
 		
 	}
 	
 
 	public Alianza crearAlianzaDesdeCampos() {
 		Alianza alianza = new Alianza();
-		
-		alianza.setId(1);
-		alianza.setNombre("FlyBondi");
-		
+		ComboItem item = (ComboItem)vista.getComboBox_alianza().getSelectedItem();
+		alianza.setId(item.getKey());
 		return alianza;
 	}
 	

@@ -5,15 +5,28 @@ import java.util.List;
 
 import dao.factory.AerolineaFactory;
 import dao.factory.AlianzaFactory;
-import dao.implementations.db.AlianzaDaoImplDB;
 import dao.interfaces.IAerolineaDao;
 import dao.interfaces.IAlianzaDao;
 import modelo.Aerolinea;
 import modelo.Alianza;
 import vista.VistaAerolinea;
+import vista.VistaInicio;
 
 public class AerolineasControlador {
 
+	public VistaInicio vistaInicio;
+	
+	
+	public AerolineasControlador() 
+	{
+		
+	}
+	
+	public AerolineasControlador(VistaInicio vistaInicio) 
+	{
+		this.vistaInicio = vistaInicio;
+	}
+	
 	
 	/**
 	 * Mostrar ventana para dar de alta nuevo aerolinea.
@@ -120,6 +133,18 @@ public class AerolineasControlador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	public void crearAerolinea(Aerolinea aerolinea)
+	{
+		try {
+			IAerolineaDao aerolineaDao = AerolineaFactory.getImplementation("db");
+			aerolineaDao.agregar(aerolinea);
+			aerolineaDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
