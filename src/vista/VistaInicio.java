@@ -271,8 +271,14 @@ public class VistaInicio extends JFrame {
 		for(int i = 0; i<aerolineas.size(); i++) 
 		{
 			Aerolinea aerolinea = aerolineas.get(i);
-			datos[i] = new String[] { aerolinea.getNombre(), aerolinea.getAlianza().getNombre()
-			};
+			
+			if (aerolinea.getAlianza() !=null) {
+				datos[i] = new String[] { aerolinea.getNombre(), aerolinea.getAlianza().getNombre()};
+			}else {
+				
+				datos[i] = new String[] { aerolinea.getNombre(), ""};
+			}
+			
 		}
 		
 		recargarDatosTabla(tableAerolineas, columnas, datos);
