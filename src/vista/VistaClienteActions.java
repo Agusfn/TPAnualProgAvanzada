@@ -114,11 +114,17 @@ public class VistaClienteActions implements ActionListener {
 	{
 		
 		if(vista.textFieldNombreYApellido.getText().equals("") || vista.textFieldDni.getText().equals("") || vista.textFieldFechaNac.getText().equals("")
-				|| vista.textFieldEmail.getText().equals("") || vista.textFieldCuit.getText().equals("") || vista.textFieldTelPersonal.getText().equals("") || vista.textFieldTelCelular.getText().equals("")
-				|| vista.textFieldTelLaboral.getText().equals("") || vista.textFieldDirCalle.getText().equals("") || vista.textFieldDirAltura.getText().equals("")
+				|| vista.textFieldEmail.getText().equals("") || vista.textFieldCuit.getText().equals("") || vista.textFieldDirCalle.getText().equals("") || vista.textFieldDirAltura.getText().equals("")
 				|| vista.textFieldDirCiudad.getText().equals("") || vista.textFieldDirCodPostal.getText().equals("") || vista.textFieldPasaporteNro.getText().equals("")
 				|| vista.textFieldPasaporteAutoridadEmis.getText().equals("") || vista.textFieldPasaporteFechaEmis.getText().equals("") || vista.textFieldPasaporteFechaVto.getText().equals("")) {
 			tirarError("Completá todos los campos");
+			return false;
+		}
+		
+		
+		if(vista.textFieldTelPersonal.getText().equals("") && vista.textFieldTelCelular.getText().equals("")
+				&& vista.textFieldTelLaboral.getText().equals("")) {
+			tirarError("Ingresá al menos un teléfono.");
 			return false;
 		}
 		
@@ -175,8 +181,9 @@ public class VistaClienteActions implements ActionListener {
 			
 			if(vista.textFieldPsprtPaisPersonaliz.getText().equals("")) {
 				tirarError("Ingresa un pais de emisión de pasaporte");
+				return false;
 			}
-			return false;
+			
 			
 		}
 		

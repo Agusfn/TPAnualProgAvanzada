@@ -22,12 +22,14 @@ import controlador.ClientesControlador;
 import controlador.InicioControlador;
 import controlador.PaisesControlador;
 import controlador.ProvinciasControlador;
+import controlador.VentasControlador;
 import controlador.VueloControlador;
 import modelo.Aerolinea;
 import modelo.Aeropuerto;
 import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
+import modelo.Venta;
 import modelo.Vuelo;
 import javax.swing.ListSelectionModel;
 
@@ -39,6 +41,7 @@ public class VistaInicio extends JFrame {
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
 	public AerolineasControlador aerolineaControlador = new AerolineasControlador();
 	public VueloControlador vueloControlador = new VueloControlador();
+	public VentasControlador ventasControlador = new VentasControlador(this);
 
 	
 	public JPanel contentPane;
@@ -48,9 +51,7 @@ public class VistaInicio extends JFrame {
 	public JTable tableAerolineas;
 	public JTextField textFieldBuscarAerolinea;
 	public JTable tableVuelos;
-	public JTextField textFieldBuscarVuelo;
 	public JTable tableVentas;
-	public JTextField textFieldBuscarVenta;
 	public JTable tableProvincias;
 	public JTable tablePaises;
 	public JTable tableAeropuertos;
@@ -163,13 +164,6 @@ public class VistaInicio extends JFrame {
 		JButton btnCrearVuelo = new JButton("Nuevo vuelo");
 		panel_9.add(btnCrearVuelo);
 		
-		textFieldBuscarVuelo = new JTextField();
-		panel_9.add(textFieldBuscarVuelo);
-		textFieldBuscarVuelo.setColumns(10);
-		
-		JButton btnBuscarVuelo = new JButton("Buscar");
-		panel_9.add(btnBuscarVuelo);
-		
 		JScrollPane scrollPane_4 = new JScrollPane();
 		panel_3.add(scrollPane_4, BorderLayout.CENTER);
 		
@@ -186,15 +180,11 @@ public class VistaInicio extends JFrame {
 		panel_4.add(panel_10, BorderLayout.NORTH);
 		panel_10.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
-		JButton btnCrearVenta = new JButton("New button");
+		JButton btnCrearVenta = new JButton("Alta venta");
 		panel_10.add(btnCrearVenta);
 		
-		textFieldBuscarVenta = new JTextField();
-		panel_10.add(textFieldBuscarVenta);
-		textFieldBuscarVenta.setColumns(10);
-		
-		JButton btnBuscarVenta = new JButton("New button");
-		panel_10.add(btnBuscarVenta);
+		JButton btnDetallesVenta = new JButton("Ver detalles");
+		panel_10.add(btnDetallesVenta);
 		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		panel_4.add(scrollPane_3, BorderLayout.CENTER);
@@ -246,6 +236,8 @@ public class VistaInicio extends JFrame {
 		recargarTablaPaises();
 		recargarTablaAeropuertos();
 		recargarTablaAerolineas();
+		recargarTablaVentas();
+		recargarTablaVuelos();
 		
 	}
 	
@@ -395,37 +387,70 @@ public class VistaInicio extends JFrame {
 		recargarDatosTabla(tablePaises, columnas, datos);
 	}
 	
-	/*public void recargarTablaVuelos()
+	
+	
+	public void recargarTablaVuelos()
 	{
-		List<Vuelo> vuelos = vueloControlador.obtenerTodos();
+		List<Vuelo> vuelos = vueloControlador.obtenerTodosDetallados();
 		
-		String[] columnas = {"vuelo", "AeropuertoSalida", "AeropuertoLlegada"};
-		String[][] datos = new String[vuelos.size()][3];
+		String[] columnas = {"ID", "Aerolínea", "Número", "Asientos", "Aerop salida", "Aerop llegada", "Fecha salida", "Fecha llegada", "Tiempo vuelo"};
+		String[][] datos = new String[vuelos.size()][9];
 		
 		for(int i = 0; i<vuelos.size(); i++) 
 		{
-			Vuelo vuel = vuelos.get(i);
+			Vuelo vuelo = vuelos.get(i);
 			
-			String nombreVuelo;
-			if(aerop.getProvincia() == null) {
-				nombreVuelo = aerop.getNombreProvincia();				
-			} else {
-				nombreVuelo = aerop.getProvincia().getNombre();
-			}
-			
-			String nombrePais;
-			if(aerop.getPais() == null) {
-				nombrePais = aerop.getNombrePais();
-			} else {
-				nombrePais = aerop.getPais().getNombre();
-			}
-			
-			datos[i] = new String[] { vuelo, aerop.getCiudad(), nombreProvincia, nombrePais };
+			datos[i] = new String[] { 
+				Integer.toString(vuelo.getId()),
+				vuelo.getAerolinea().getNombre(),
+				vuelo.getNumero(),
+				Integer.toString(vuelo.getCantAsientos()),
+				vuelo.getAeropSalida().getIdentificacion(),
+				vuelo.getAeropLlegada().getIdentificacion(),
+				vuelo.getFechaHoraSalida().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")),
+				vuelo.getFechaHoraLlegada().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")),
+				Integer.toString(vuelo.getTiempoVueloMinutos())
+			};
 		}
 		
-		recargarDatosTabla(tableAeropuertos, columnas, datos);
+		recargarDatosTabla(tableVuelos, columnas, datos);
 	}
-*/
+
+	
+	
+	
+	/**
+	 * Obtener ventas y cargar tabla de ventas.
+	 */
+	public void recargarTablaVentas() 
+	{
+		List<Venta> ventas = this.ventasControlador.obtenerTodasConDetalles();
+		
+		String[] columnas = {"ID", "Fecha compra", "Cliente", "Nro vuelo", "Trayecto", "Hora salida", "Monto ARS", "Forma pago", "Cuotas"};
+		String[][] datos = new String[ventas.size()][9];
+		
+		for(int i = 0; i<ventas.size(); i++) 
+		{
+			Venta venta = ventas.get(i);
+			datos[i] = new String[] { 
+					Integer.toString(venta.getId()),
+					venta.getFechaHora().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+					venta.getCliente().getNombreYApellido(),
+					venta.getVuelo().getNumero(),
+					venta.getVuelo().getAeropSalida().getIdentificacion() + " -> " + venta.getVuelo().getAeropLlegada().getIdentificacion(),
+					venta.getVuelo().getFechaHoraSalida().format(DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm:ss")),
+					Double.toString(venta.getMonto()),
+					venta.getFormaDePago(),
+					Integer.toString(venta.getCuotas())
+					
+			};
+		}
+		
+		recargarDatosTabla(tableVentas, columnas, datos);
+	}
+	
+	
+	
 	
 	public JButton getAgregarCliente() {
 		return this.btnCrearCliente;
