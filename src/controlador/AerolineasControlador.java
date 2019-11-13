@@ -1,14 +1,13 @@
 package controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import dao.factory.AerolineaFactory;
 import dao.implementations.db.AlianzaDaoImplDB;
 import dao.interfaces.IAerolineaDao;
-import dao.interfaces.IAlianzaDao;
 import modelo.Aerolinea;
 import modelo.Alianza;
-import modelo.Cliente;
 import vista.VistaAerolinea;
 
 public class AerolineasControlador {
@@ -49,6 +48,42 @@ public class AerolineasControlador {
 		
 	}
 	
+	/**
+	 * Obtener las aerolineas únicamente que poseen alianzas, con sus respectivas alianzas asociadas.
+	 * @return
+	 */
+	public List<Aerolinea> obtenerUnicamenteConAlianzas()
+	{
+		
+		try {
+			
+			IAerolineaDao aerolineaDao = AerolineaFactory.getImplementation("db");
+			List<Aerolinea> aerolineas = aerolineaDao.obtenerTodos();
+			aerolineaDao.close();
+			
+			AlianzaDaoImplDB alianzaDao = new AlianzaDaoImplDB();
+			
+			
+			List<Aerolinea> aerolineasFiltradas = new ArrayList<Aerolinea>();
+			
+			for(Aerolinea aerolinea: aerolineas) {
+				if(aerolinea.getAlianza() != null) {
+					aerolineasFiltradas.add(aerolinea);
+					aerolinea.setAlianza(alianzaDao.obtener(aerolinea.getAlianza().getId()));
+				}
+			}
+			
+			alianzaDao.close();
+			
+			
+			return aerolineasFiltradas;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	/**
