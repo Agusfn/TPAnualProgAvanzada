@@ -28,6 +28,7 @@ import modelo.Aeropuerto;
 import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
+import modelo.Vuelo;
 
 public class VistaInicio extends JFrame {
 	
@@ -372,8 +373,37 @@ public class VistaInicio extends JFrame {
 		recargarDatosTabla(tablePaises, columnas, datos);
 	}
 	
-	
-
+	/*public void recargarTablaVuelos()
+	{
+		List<Vuelo> vuelos = vueloControlador.obtenerTodos();
+		
+		String[] columnas = {"vuelo", "AeropuertoSalida", "AeropuertoLlegada"};
+		String[][] datos = new String[vuelos.size()][3];
+		
+		for(int i = 0; i<vuelos.size(); i++) 
+		{
+			Vuelo vuel = vuelos.get(i);
+			
+			String nombreVuelo;
+			if(aerop.getProvincia() == null) {
+				nombreVuelo = aerop.getNombreProvincia();				
+			} else {
+				nombreVuelo = aerop.getProvincia().getNombre();
+			}
+			
+			String nombrePais;
+			if(aerop.getPais() == null) {
+				nombrePais = aerop.getNombrePais();
+			} else {
+				nombrePais = aerop.getPais().getNombre();
+			}
+			
+			datos[i] = new String[] { vuelo, aerop.getCiudad(), nombreProvincia, nombrePais };
+		}
+		
+		recargarDatosTabla(tableAeropuertos, columnas, datos);
+	}
+*/
 	
 	public JButton getAgregarCliente() {
 		return this.btnCrearCliente;

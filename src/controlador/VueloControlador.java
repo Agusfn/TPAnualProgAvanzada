@@ -34,7 +34,7 @@ public class VueloControlador {
 	
 	
 	
-	public List<Vuelo> obtenerTodas()
+	public List<Vuelo> obtenerTodos()
 		{
 			
 			
