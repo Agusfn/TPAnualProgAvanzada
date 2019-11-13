@@ -1,36 +1,49 @@
 package vista;
 
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import controlador.AerolineasControlador;
 import controlador.ClientesControlador;
+import controlador.DireccionesControlador;
 import controlador.PaisesControlador;
+import controlador.PasajerosFrecuentesControlador;
+import controlador.PasaportesControlador;
 import controlador.ProvinciasControlador;
+import controlador.TelefonosControlador;
 import modelo.Aerolinea;
+import modelo.Cliente;
+import modelo.Direccion;
 import modelo.Pais;
+import modelo.PasajeroFrecuente;
+import modelo.Pasaporte;
 import modelo.Provincia;
+import modelo.Telefono;
 import util.ComboItem;
-
-import javax.swing.JSeparator;
-import java.awt.Font;
-import javax.swing.JComboBox;
-import java.util.List;
-import javax.swing.JTextPane;
 
 public class VistaCliente extends JFrame {
 
-	private ClientesControlador clienteControlador;
+	public ClientesControlador clienteControlador;
 	
-	public PaisesControlador paisesControlador = new PaisesControlador();
-	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
 	public AerolineasControlador aerolineasControlador = new AerolineasControlador();
+	public DireccionesControlador direccionesControlador = new DireccionesControlador();
+	public PaisesControlador paisesControlador = new PaisesControlador();
+	public PasajerosFrecuentesControlador pasajFrecControlador = new PasajerosFrecuentesControlador();
+	public PasaportesControlador pasaportesControlador = new PasaportesControlador();
+	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
+	public TelefonosControlador telControlador = new TelefonosControlador();
+	
 	
 	public JPanel contentPane;
 	public JTextField textFieldNombreYApellido;
@@ -60,6 +73,7 @@ public class VistaCliente extends JFrame {
 	public JComboBox comboBoxDirProvincia;
 	public JTextField textFieldPsprtPaisPersonaliz;
 	public JLabel lblPsprtPaisPersonaliz;
+	public JTextField textFieldCuit;
 	
 	/**
 	 * Create the frame.
@@ -76,7 +90,7 @@ public class VistaCliente extends JFrame {
 		
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 842, 574);
+		setBounds(100, 100, 842, 578);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -123,27 +137,27 @@ public class VistaCliente extends JFrame {
 		panel.add(lblEmail);
 		
 		textFieldTelPersonal = new JTextField();
-		textFieldTelPersonal.setBounds(142, 215, 246, 20);
+		textFieldTelPersonal.setBounds(142, 255, 246, 20);
 		panel.add(textFieldTelPersonal);
 		textFieldTelPersonal.setColumns(10);
 		
 		textFieldTelCelular = new JTextField();
-		textFieldTelCelular.setBounds(142, 246, 246, 20);
+		textFieldTelCelular.setBounds(142, 286, 246, 20);
 		panel.add(textFieldTelCelular);
 		textFieldTelCelular.setColumns(10);
 		
 		textFieldTelLaboral = new JTextField();
-		textFieldTelLaboral.setBounds(142, 277, 246, 20);
+		textFieldTelLaboral.setBounds(142, 317, 246, 20);
 		panel.add(textFieldTelLaboral);
 		textFieldTelLaboral.setColumns(10);
 		
 		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(actions);
-		btnAceptar.setBounds(640, 448, 136, 28);
+		btnAceptar.setBounds(640, 484, 136, 28);
 		panel.add(btnAceptar);
 		
 		JSeparator separator = new JSeparator();
-		separator.setBounds(41, 155, 347, 20);
+		separator.setBounds(41, 195, 347, 20);
 		panel.add(separator);
 		
 		JLabel lblNewLabel = new JLabel("Datos personales");
@@ -153,73 +167,73 @@ public class VistaCliente extends JFrame {
 		
 		JLabel lblDatosTelefnicos = new JLabel("Datos telef\u00F3nicos");
 		lblDatosTelefnicos.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDatosTelefnicos.setBounds(41, 182, 146, 22);
+		lblDatosTelefnicos.setBounds(41, 222, 146, 22);
 		panel.add(lblDatosTelefnicos);
 		
 		JLabel lblTelfonoPersonal = new JLabel("Tel\u00E9fono personal");
-		lblTelfonoPersonal.setBounds(41, 215, 93, 14);
+		lblTelfonoPersonal.setBounds(41, 255, 93, 14);
 		panel.add(lblTelfonoPersonal);
 		
 		JLabel lblTelfonoCelular = new JLabel("Tel\u00E9fono celular");
-		lblTelfonoCelular.setBounds(41, 246, 103, 14);
+		lblTelfonoCelular.setBounds(41, 286, 103, 14);
 		panel.add(lblTelfonoCelular);
 		
 		JLabel lblTelfonoLaboral = new JLabel("Tel\u00E9fono laboral");
-		lblTelfonoLaboral.setBounds(41, 277, 103, 14);
+		lblTelfonoLaboral.setBounds(41, 317, 103, 14);
 		panel.add(lblTelfonoLaboral);
 		
 		JLabel lblDireccin = new JLabel("Direcci\u00F3n");
 		lblDireccin.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblDireccin.setBounds(41, 332, 146, 14);
+		lblDireccin.setBounds(41, 372, 146, 14);
 		panel.add(lblDireccin);
 		
 		JSeparator separator_1 = new JSeparator();
-		separator_1.setBounds(41, 308, 347, 20);
+		separator_1.setBounds(41, 348, 347, 20);
 		panel.add(separator_1);
 		
 		JLabel lblCalle = new JLabel("Calle");
-		lblCalle.setBounds(41, 365, 56, 14);
+		lblCalle.setBounds(41, 405, 56, 14);
 		panel.add(lblCalle);
 		
 		JLabel lblCiudad = new JLabel("Ciudad");
-		lblCiudad.setBounds(41, 396, 46, 14);
+		lblCiudad.setBounds(41, 436, 46, 14);
 		panel.add(lblCiudad);
 		
 		JLabel lblPas = new JLabel("Pa\u00EDs");
-		lblPas.setBounds(41, 424, 56, 14);
+		lblPas.setBounds(41, 464, 56, 14);
 		panel.add(lblPas);
 		
 		textFieldDirCiudad = new JTextField();
 		textFieldDirCiudad.setColumns(10);
-		textFieldDirCiudad.setBounds(101, 393, 134, 20);
+		textFieldDirCiudad.setBounds(101, 433, 134, 20);
 		panel.add(textFieldDirCiudad);
 		
 		textFieldDirCalle = new JTextField();
 		textFieldDirCalle.setColumns(10);
-		textFieldDirCalle.setBounds(101, 362, 155, 20);
+		textFieldDirCalle.setBounds(101, 402, 155, 20);
 		panel.add(textFieldDirCalle);
 		
 		JLabel lblAltura = new JLabel("Altura");
-		lblAltura.setBounds(266, 365, 56, 14);
+		lblAltura.setBounds(266, 405, 56, 14);
 		panel.add(lblAltura);
 		
 		textFieldDirAltura = new JTextField();
 		textFieldDirAltura.setColumns(10);
-		textFieldDirAltura.setBounds(315, 362, 73, 20);
+		textFieldDirAltura.setBounds(315, 402, 73, 20);
 		panel.add(textFieldDirAltura);
 		
 		textFieldDirProvinciaCustom = new JTextField();
 		textFieldDirProvinciaCustom.setColumns(10);
-		textFieldDirProvinciaCustom.setBounds(101, 448, 287, 20);
+		textFieldDirProvinciaCustom.setBounds(101, 488, 287, 20);
 		panel.add(textFieldDirProvinciaCustom);
 		
 		textFieldDirCodPostal = new JTextField();
 		textFieldDirCodPostal.setColumns(10);
-		textFieldDirCodPostal.setBounds(309, 393, 79, 20);
+		textFieldDirCodPostal.setBounds(309, 433, 79, 20);
 		panel.add(textFieldDirCodPostal);
 		
 		JLabel lblCdPostal = new JLabel("C\u00F3d. postal");
-		lblCdPostal.setBounds(245, 396, 61, 14);
+		lblCdPostal.setBounds(245, 436, 61, 14);
 		panel.add(lblCdPostal);
 		
 		JLabel lblDatosDelPasasporte = new JLabel("Datos del pasasporte");
@@ -273,7 +287,7 @@ public class VistaCliente extends JFrame {
 		panel.add(lblFechaVto);
 		
 		comboBoxDirPais = new JComboBox();
-		comboBoxDirPais.setBounds(101, 421, 111, 20);
+		comboBoxDirPais.setBounds(101, 461, 111, 20);
 		comboBoxDirPais.addActionListener(actions);
 		panel.add(comboBoxDirPais);
 		
@@ -301,6 +315,7 @@ public class VistaCliente extends JFrame {
 		panel.add(lblNroPasajero);
 		
 		textFieldPasajFrecNro = new JTextField();
+		textFieldPasajFrecNro.setEnabled(false);
 		textFieldPasajFrecNro.setColumns(10);
 		textFieldPasajFrecNro.setBounds(538, 287, 238, 20);
 		panel.add(textFieldPasajFrecNro);
@@ -310,28 +325,29 @@ public class VistaCliente extends JFrame {
 		panel.add(lblCategora);
 		
 		textFieldPasajFrecCategoria = new JTextField();
+		textFieldPasajFrecCategoria.setEnabled(false);
 		textFieldPasajFrecCategoria.setColumns(10);
 		textFieldPasajFrecCategoria.setBounds(538, 320, 238, 20);
 		panel.add(textFieldPasajFrecCategoria);
 		
 		textFieldPaisPersonaliz = new JTextField();
-		textFieldPaisPersonaliz.setBounds(255, 421, 133, 20);
+		textFieldPaisPersonaliz.setBounds(255, 461, 133, 20);
 		panel.add(textFieldPaisPersonaliz);
 		textFieldPaisPersonaliz.setColumns(10);
 		textFieldPaisPersonaliz.setVisible(false);
 		
 		lblPaisPersonaliz = new JLabel("Pais");
-		lblPaisPersonaliz.setBounds(222, 424, 34, 14);
+		lblPaisPersonaliz.setBounds(222, 464, 34, 14);
 		panel.add(lblPaisPersonaliz);
 		lblPaisPersonaliz.setVisible(false);
 		
 		comboBoxDirProvincia = new JComboBox();
-		comboBoxDirProvincia.setBounds(101, 448, 287, 20);
+		comboBoxDirProvincia.setBounds(101, 488, 287, 20);
 		panel.add(comboBoxDirProvincia);
 		comboBoxDirProvincia.setVisible(false);
 		
 		JLabel lblProvincia_1 = new JLabel("Provincia");
-		lblProvincia_1.setBounds(41, 451, 56, 14);
+		lblProvincia_1.setBounds(41, 491, 56, 14);
 		panel.add(lblProvincia_1);
 		
 		textFieldPsprtPaisPersonaliz = new JTextField();
@@ -343,11 +359,80 @@ public class VistaCliente extends JFrame {
 		lblPsprtPaisPersonaliz = new JLabel("Pais");
 		lblPsprtPaisPersonaliz.setBounds(657, 96, 34, 14);
 		panel.add(lblPsprtPaisPersonaliz);
+		
+		textFieldCuit = new JTextField();
+		textFieldCuit.setColumns(10);
+		textFieldCuit.setBounds(142, 155, 246, 20);
+		panel.add(textFieldCuit);
+		
+		JLabel lblCuilcuit = new JLabel("CUIL/CUIT");
+		lblCuilcuit.setBounds(41, 158, 72, 14);
+		panel.add(lblCuilcuit);
 		lblPsprtPaisPersonaliz.setVisible(false);
 		
 		cargarAerolineasPasajeroFrecuente();
 		cargarPaisesEnCampos();
 		cargarProvincias();
+	}
+	
+	
+	public void setModoModificarCliente(Cliente cliente)
+	{
+		this.textFieldNombreYApellido.setText(cliente.getNombreYApellido());
+		this.textFieldDni.setText(cliente.getDni());
+		this.textFieldFechaNac.setText(cliente.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		this.textFieldEmail.setText(cliente.getEmail());
+		this.textFieldCuit.setText(cliente.getCuitOCuil());
+		
+		Telefono telefono = this.telControlador.obtenerTelefono(cliente.getTelefono().getId());
+		this.textFieldTelPersonal.setText(telefono.getNroPersonal());
+		this.textFieldTelLaboral.setText(telefono.getNroLaboral());
+		this.textFieldTelCelular.setText(telefono.getNroCelular());
+		
+		Direccion direccion = this.direccionesControlador.obtenerDireccion(cliente.getDireccion().getId());
+		this.textFieldDirCalle.setText(direccion.getCalle());
+		this.textFieldDirAltura.setText(direccion.getAltura());
+		this.textFieldDirCodPostal.setText(direccion.getCodigoPostal());
+		this.textFieldDirCiudad.setText(direccion.getCiudad());
+		
+		if(direccion.getPais() == null) {
+			this.comboBoxDirPais.setSelectedIndex(5); // 5???
+			this.textFieldPaisPersonaliz.setText(direccion.getNombrePais());
+		} else {
+			this.comboBoxDirPais.setSelectedIndex(direccion.getPais().getId());
+		}
+		
+		if(direccion.getProvincia() == null) {
+			this.textFieldDirProvinciaCustom.setText(direccion.getNombreProvincia());
+		} else {
+			this.comboBoxDirProvincia.setSelectedIndex(direccion.getProvincia().getId());
+		}
+		
+		
+		Pasaporte pasaporte = this.pasaportesControlador.obtenerPasaporte(cliente.getPasaporte().getId());
+		this.textFieldPasaporteNro.setText(pasaporte.getNumero());
+		this.textFieldPasaporteAutoridadEmis.setText(pasaporte.getAutoridadEmision());
+		this.textFieldPasaporteFechaEmis.setText(pasaporte.getFechaEmision().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		this.textFieldPasaporteFechaVto.setText(pasaporte.getFechVencimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		
+		if(pasaporte.getPaisEmision() == null) {
+			this.comboBoxPasaportePaisEmis.setSelectedIndex(5); // 5???
+			this.textFieldPsprtPaisPersonaliz.setText(pasaporte.getNombrePaisEmision());
+		} else {
+			this.comboBoxPasaportePaisEmis.setSelectedIndex(pasaporte.getPaisEmision().getId());
+		}
+		
+		
+		if(cliente.getPasajeroFrecuente() != null) {
+			
+			PasajeroFrecuente pasajFrec = this.pasajFrecControlador.obtenerPasajeroFrecuente(cliente.getPasajeroFrecuente().getId());
+			// FALTA DROPDOWN
+			this.textFieldPasajFrecNro.setText(pasajFrec.getNumero());
+			this.textFieldPasajFrecCategoria.setText(pasajFrec.getCategoria());
+			
+			
+		}
+		
 	}
 	
 	
@@ -358,7 +443,7 @@ public class VistaCliente extends JFrame {
 	{
 		List<Aerolinea> aerolineas = aerolineasControlador.obtenerUnicamenteConAlianzas();
 		
-		comboBoxPasajFrecAerolinea.addItem(new ComboItem(-1, "Seleccionar"));
+		comboBoxPasajFrecAerolinea.addItem(new ComboItem(-1, "Ninguna"));
 		
 		for(Aerolinea aerolinea: aerolineas) {
 			ComboItem item = new ComboItem(
@@ -457,7 +542,4 @@ public class VistaCliente extends JFrame {
 	{
 		return this.comboBoxPasajFrecAerolinea;
 	}
-	
-	
-	
 }

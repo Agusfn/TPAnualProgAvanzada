@@ -29,10 +29,11 @@ import modelo.Cliente;
 import modelo.Pais;
 import modelo.Provincia;
 import modelo.Vuelo;
+import javax.swing.ListSelectionModel;
 
 public class VistaInicio extends JFrame {
 	
-	public ClientesControlador clientesControlador = new ClientesControlador();
+	public ClientesControlador clientesControlador = new ClientesControlador(this);
 	public PaisesControlador paisesControlador = new PaisesControlador();
 	public AeropuertosControlador aeropuertosControlador = new AeropuertosControlador();
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
@@ -40,27 +41,31 @@ public class VistaInicio extends JFrame {
 	public VueloControlador vueloControlador = new VueloControlador();
 
 	
-	private JPanel contentPane;
-	private JTable tableClientes;
-	private JTextField textFieldBuscarCliente;
-	private JButton btnCrearCliente;
-	private JTable tableAerolineas;
-	private JTextField textFieldBuscarAerolinea;
-	private JTable tableVuelos;
-	private JTextField textFieldBuscarVuelo;
-	private JTable tableVentas;
-	private JTextField textFieldBuscarVenta;
-	private JTable tableProvincias;
-	private JTable tablePaises;
-	private JTable tableAeropuertos;
-	private JButton btnCrearAerolinea;
-	
+	public JPanel contentPane;
+	public JTable tableClientes;
+	public JTextField textFieldBuscarCliente;
+	public JButton btnCrearCliente;
+	public JTable tableAerolineas;
+	public JTextField textFieldBuscarAerolinea;
+	public JTable tableVuelos;
+	public JTextField textFieldBuscarVuelo;
+	public JTable tableVentas;
+	public JTextField textFieldBuscarVenta;
+	public JTable tableProvincias;
+	public JTable tablePaises;
+	public JTable tableAeropuertos;
+	public JButton btnCrearAerolinea;
+	public JButton btnModificarCliente;
 
 	/**
 	 * Create the frame.
 	 */
 	
 	public VistaInicio(InicioControlador controlador) {
+		
+		VistaInicioActions actions = new VistaInicioActions(this);
+		
+		
 		setTitle("Sistema aerol\u00EDnea");
 		
 		
@@ -87,7 +92,7 @@ public class VistaInicio extends JFrame {
 		panel.add(panel_1, BorderLayout.NORTH);
 		
 		btnCrearCliente = new JButton("Nuevo cliente");
-		btnCrearCliente.addActionListener(new VistaInicioActions(this));
+		btnCrearCliente.addActionListener(actions);
 		panel_1.add(btnCrearCliente);
 		
 		textFieldBuscarCliente = new JTextField();
@@ -97,11 +102,16 @@ public class VistaInicio extends JFrame {
 		JButton btnBuscarCliente = new JButton("Buscar");
 		panel_1.add(btnBuscarCliente);
 		
+		btnModificarCliente = new JButton("Modificar seleccionado");
+		btnModificarCliente.addActionListener(actions);
+		panel_1.add(btnModificarCliente);
+		
 		JScrollPane scrollPane_6 = new JScrollPane();
 		panel.add(scrollPane_6, BorderLayout.CENTER);
 		
 		
 		tableClientes = new JTable();
+		tableClientes.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableClientes.setFillsViewportHeight(true);
 		scrollPane_6.setViewportView(tableClientes);
 		
@@ -117,7 +127,7 @@ public class VistaInicio extends JFrame {
 		panel_8.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 		
 		btnCrearAerolinea = new JButton("Nueva aerol\u00EDnea");
-		btnCrearAerolinea.addActionListener(new VistaInicioActions(this));
+		btnCrearAerolinea.addActionListener(actions);
 		panel_8.add(btnCrearAerolinea);
 		
 		textFieldBuscarAerolinea = new JTextField();
@@ -131,6 +141,7 @@ public class VistaInicio extends JFrame {
 		panel_2.add(scrollPane_5, BorderLayout.CENTER);
 		
 		tableAerolineas = new JTable();
+		tableAerolineas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableAerolineas.setFillsViewportHeight(true);
 		scrollPane_5.setViewportView(tableAerolineas);
 		
@@ -158,6 +169,7 @@ public class VistaInicio extends JFrame {
 		panel_3.add(scrollPane_4, BorderLayout.CENTER);
 		
 		tableVuelos = new JTable();
+		tableVuelos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableVuelos.setFillsViewportHeight(true);
 		scrollPane_4.setViewportView(tableVuelos);
 		
@@ -183,6 +195,7 @@ public class VistaInicio extends JFrame {
 		panel_4.add(scrollPane_3, BorderLayout.CENTER);
 		
 		tableVentas = new JTable();
+		tableVentas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableVentas.setFillsViewportHeight(true);
 		scrollPane_3.setViewportView(tableVentas);
 		
@@ -194,6 +207,7 @@ public class VistaInicio extends JFrame {
 		panel_5.add(scrollPane_2);
 		
 		tableProvincias = new JTable();
+		tableProvincias.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableProvincias.setFillsViewportHeight(true);
 		scrollPane_2.setViewportView(tableProvincias);
 		
@@ -205,6 +219,7 @@ public class VistaInicio extends JFrame {
 		panel_6.add(scrollPane_1);
 		
 		tablePaises = new JTable();
+		tablePaises.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane_1.setViewportView(tablePaises);
 		tablePaises.setFillsViewportHeight(true);
 		
@@ -216,6 +231,7 @@ public class VistaInicio extends JFrame {
 		panel_7.add(scrollPane);
 		
 		tableAeropuertos = new JTable();
+		tableAeropuertos.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		tableAeropuertos.setFillsViewportHeight(true);
 		scrollPane.setViewportView(tableAeropuertos);
 		
@@ -236,14 +252,15 @@ public class VistaInicio extends JFrame {
 	{
 		List<Cliente> clientes = clientesControlador.obtenerTodosConPasaportes();
 				
-		String[] columnas = {"Nombre y apellido", "DNI", "Fecha nacimiento", "E-mail", "Nro pasaporte"};
+		String[] columnas = {"ID", "Nombre y apellido", "DNI", "Fecha nacimiento", "E-mail", "Nro pasaporte"};
 		
-		String[][] datos = new String[clientes.size()][5];
+		String[][] datos = new String[clientes.size()][6];
 		
 		for(int i = 0; i<clientes.size(); i++) 
 		{
 			Cliente cliente = clientes.get(i);
 			datos[i] = new String[] { 
+					Integer.toString(cliente.getId()),
 					cliente.getNombreYApellido(), 
 					cliente.getDni(), 
 					cliente.getFechaNacimiento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
