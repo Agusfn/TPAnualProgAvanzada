@@ -27,8 +27,8 @@ public class AeropuertosControlador {
 			
 			
 			// Cargamos sus paises y provincias
-			IPaisDao paisDao = PaisFactory.getImplementation("db");
-			IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("db");
+			IPaisDao paisDao = PaisFactory.getImplementation("archivo");
+			IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("archivo");
 			
 			for(Aeropuerto aerop: aeropuertos) 
 			{

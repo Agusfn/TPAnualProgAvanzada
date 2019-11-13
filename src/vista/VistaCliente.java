@@ -3,6 +3,7 @@ package vista;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -74,6 +75,16 @@ public class VistaCliente extends JFrame {
 	public JTextField textFieldPsprtPaisPersonaliz;
 	public JLabel lblPsprtPaisPersonaliz;
 	public JTextField textFieldCuit;
+	
+	
+	public boolean modoModificarCliente = false;
+	public Cliente clienteAModificar;
+	
+	
+	/**
+	 * Esto almacena un clave/valor, donde asocia el id de la aerolínea con el nro. de índice del dropdown de aerolínea (para pasajero frecuente).
+	 */
+	private HashMap<Integer, Integer> idAeroLineaToPasajeroFrecuenteComboboxIndex = new HashMap<Integer, Integer>();
 	
 	/**
 	 * Create the frame.
@@ -376,7 +387,23 @@ public class VistaCliente extends JFrame {
 	}
 	
 	
+	
 	public void setModoModificarCliente(Cliente cliente)
+	{
+		completarCamposConInformacionDeCliente(cliente);
+		
+		this.modoModificarCliente = true;
+		this.clienteAModificar = cliente;
+	}
+	
+	
+	
+	/**
+	 * Completa los campos con info del cliente, y solicita a los respectivos controladores de las
+	 * entidades relacionadas, informacion de las mismas.
+	 * @param cliente
+	 */
+	public void completarCamposConInformacionDeCliente(Cliente cliente)
 	{
 		this.textFieldNombreYApellido.setText(cliente.getNombreYApellido());
 		this.textFieldDni.setText(cliente.getDni());
@@ -426,14 +453,16 @@ public class VistaCliente extends JFrame {
 		if(cliente.getPasajeroFrecuente() != null) {
 			
 			PasajeroFrecuente pasajFrec = this.pasajFrecControlador.obtenerPasajeroFrecuente(cliente.getPasajeroFrecuente().getId());
-			// FALTA DROPDOWN
+			
+			int idAerolinea = pasajFrec.getAerolinea().getId();
+			this.comboBoxPasajFrecAerolinea.setSelectedIndex(idAeroLineaToPasajeroFrecuenteComboboxIndex.get(idAerolinea));
 			this.textFieldPasajFrecNro.setText(pasajFrec.getNumero());
 			this.textFieldPasajFrecCategoria.setText(pasajFrec.getCategoria());
 			
-			
 		}
-		
 	}
+	
+	
 	
 	
 	/**
@@ -445,12 +474,15 @@ public class VistaCliente extends JFrame {
 		
 		comboBoxPasajFrecAerolinea.addItem(new ComboItem(-1, "Ninguna"));
 		
+		int i = 1; // 0 ya es la opción "Ninguna"
 		for(Aerolinea aerolinea: aerolineas) {
+			idAeroLineaToPasajeroFrecuenteComboboxIndex.put(aerolinea.getId(), i);
 			ComboItem item = new ComboItem(
 					aerolinea.getId(), 
 					aerolinea.getNombre() + "(" + aerolinea.getAlianza().getNombre() + ")"
 			);
 			comboBoxPasajFrecAerolinea.addItem(item);
+			i++;
 		}		
 		
 	}

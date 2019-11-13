@@ -16,7 +16,8 @@ public class VistaInicioActions implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		
-		// Clientes
+		// ***********Clientes***********
+		
 		if(arg0.getSource() == this.vista.getAgregarCliente()) 
 		{
 			 vista.clientesControlador.mostrarVentanaCrear();
@@ -35,6 +36,29 @@ public class VistaInicioActions implements ActionListener {
 			vista.clientesControlador.mostrarVentanaModificar(idCliente);
 			
 		}
+		else if(arg0.getSource() == this.vista.btnEliminarCliente)
+		{
+			
+			int fila = vista.tableClientes.getSelectedRow();
+			
+			if(fila == -1) {
+				JOptionPane.showMessageDialog(null, "Selecciona un cliente");
+				return;
+			}
+			
+			int idCliente = Integer.parseInt(vista.tableClientes.getModel().getValueAt(fila, 0).toString());
+			
+			int dialogResult = JOptionPane.showConfirmDialog (null, "¿Eliminar?","", JOptionPane.YES_NO_OPTION);
+			if(dialogResult == JOptionPane.YES_OPTION)
+			{
+				vista.clientesControlador.eliminarClientePorId(idCliente);
+				vista.recargarTablaClientes();
+			}
+			
+		}
+		
+		// ***********Aerolineas***********
+		
 		else if(arg0.getSource() ==  this.vista.getAgregarAerolinea()) 
 		{
 			vista.aerolineaControlador.mostrarVentanaCrear();

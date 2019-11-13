@@ -36,6 +36,18 @@ public class DireccionesControlador {
 		}
 		
 	}
-	
+
+	public void actualizarDireccion(Direccion direccion)
+	{
+		try {
+			IDireccionDao dirDao = DireccionFactory.getImplementation("db");
+			dirDao.actualizar(direccion);
+			dirDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}	
 	
 }

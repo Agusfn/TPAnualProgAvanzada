@@ -217,59 +217,111 @@ public class VistaClienteActions implements ActionListener {
 	public void procesarEnvioFormulario()
 	{
 		
-		Telefono telefono = crearTelefonoDesdeCampos();
-		vista.telControlador.altaTelefono(telefono);
 		
-		Direccion direccion = crearDireccionDesdeCampos();
-		vista.direccionesControlador.crearDireccion(direccion);	
 		
-		Pasaporte pasaporte = crearPasaporteDesdeCampos();
-		vista.pasaportesControlador.crearPasaporte(pasaporte);
-		
-		PasajeroFrecuente pasajFrec = null;
-		ComboItem item = (ComboItem)vista.comboBoxPasajFrecAerolinea.getSelectedItem();
-		if(item.getKey() != -1) {
-			pasajFrec = crearPasajeroFrecuenteDesdeCampos();
-			vista.pasajFrecControlador.crearPasajeroFrecuente(pasajFrec);
+		if(vista.modoModificarCliente == false) 
+		{
+
+			Telefono telefono = new Telefono();
+			setearValoresATelefonoDesdeCampos(telefono);
+			vista.telControlador.crearTelefono(telefono);
+			
+			Direccion direccion = new Direccion();
+			setearValoresADireccionDesdeCampos(direccion);
+			vista.direccionesControlador.crearDireccion(direccion);	
+			
+			Pasaporte pasaporte = new Pasaporte();
+			setearValoresAPasaporteDesdeCampos(pasaporte);
+			vista.pasaportesControlador.crearPasaporte(pasaporte);
+			
+			
+			PasajeroFrecuente pasajFrec = null;
+			
+			ComboItem item = (ComboItem)vista.comboBoxPasajFrecAerolinea.getSelectedItem();
+			if(item.getKey() != -1) {
+				pasajFrec = new PasajeroFrecuente();
+				setearValoresAPasajFrecuenteDesdeCampos(pasajFrec);
+				vista.pasajFrecControlador.crearPasajeroFrecuente(pasajFrec);
+			}
+			
+			Cliente cliente = new Cliente();
+			setearValoresAClienteDesdeCampos(cliente);
+
+			cliente.setTelefono(telefono);
+			cliente.setDireccion(direccion);
+			cliente.setPasaporte(pasaporte);
+			cliente.setPasajeroFrecuente(pasajFrec);
+			
+			vista.clienteControlador.crearCliente(cliente);
+			
 		}
+		else
+		{
+			
+			Cliente cliente = vista.clienteAModificar;
+			
+			Telefono telefono = vista.telControlador.obtenerTelefono(cliente.getTelefono().getId());
+			setearValoresATelefonoDesdeCampos(telefono);
+			vista.telControlador.actualizarTelefono(telefono);
+			
+			Direccion direccion = vista.direccionesControlador.obtenerDireccion(cliente.getDireccion().getId());
+			setearValoresADireccionDesdeCampos(direccion);
+			vista.direccionesControlador.actualizarDireccion(direccion);
+			
+			Pasaporte pasaporte = vista.pasaportesControlador.obtenerPasaporte(cliente.getPasaporte().getId());
+			setearValoresAPasaporteDesdeCampos(pasaporte);
+			vista.pasaportesControlador.actualizarPasaporte(pasaporte);
+			
+			ComboItem item = (ComboItem)vista.comboBoxPasajFrecAerolinea.getSelectedItem();
+			
+			if(item.getKey() != -1) {
+				
+				PasajeroFrecuente pasajFrec;
+				
+				if(cliente.getPasajeroFrecuente() == null)  {
+					pasajFrec = new PasajeroFrecuente();
+					setearValoresAPasajFrecuenteDesdeCampos(pasajFrec);
+					vista.pasajFrecControlador.crearPasajeroFrecuente(pasajFrec);
+					cliente.setPasajeroFrecuente(pasajFrec);
+				} 
+				else  {
+					pasajFrec = vista.pasajFrecControlador.obtenerPasajeroFrecuente(cliente.getPasajeroFrecuente().getId());
+					setearValoresAPasajFrecuenteDesdeCampos(pasajFrec);
+					vista.pasajFrecControlador.actualizarPasajeroFrecuente(pasajFrec);
+				}
+
+			} else {
+				if(cliente.getPasajeroFrecuente() != null)  {
+					PasajeroFrecuente pasajFrec = cliente.getPasajeroFrecuente();
+					cliente.setPasajeroFrecuente(null);
+					vista.clienteControlador.actualizarCliente(cliente); // esto es para remover la foreign key de pasajerofrecuente.
+					vista.pasajFrecControlador.eliminarPasajeroFrecuente(pasajFrec);
+					
+				}
+			}
+			
+			setearValoresAClienteDesdeCampos(cliente);
+			vista.clienteControlador.actualizarCliente(cliente);
+
+		}
+
 		
-		
-		Cliente cliente = new Cliente();
-		
-		cliente.setNombreYApellido(vista.textFieldNombreYApellido.getText());
-		cliente.setDni(vista.textFieldDni.getText());
-		cliente.setEmail(vista.textFieldEmail.getText());
-		cliente.setCuitOCuil(vista.textFieldCuit.getText());
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-		cliente.setFechaNacimiento(LocalDate.parse(vista.textFieldFechaNac.getText(), dtf));
-		
-		cliente.setTelefono(telefono);
-		cliente.setDireccion(direccion);
-		cliente.setPasaporte(pasaporte);
-		cliente.setPasajeroFrecuente(pasajFrec);
-		
-		vista.clienteControlador.crearCliente(cliente);
+
 	}
 	
 	
 	
-	public Telefono crearTelefonoDesdeCampos()
+	public void setearValoresATelefonoDesdeCampos(Telefono telefono)
 	{
-		Telefono telefono = new Telefono();
-		
 		telefono.setNroCelular(vista.textFieldTelCelular.getText());
 		telefono.setNroLaboral(vista.textFieldTelLaboral.getText());
 		telefono.setNroPersonal(vista.textFieldTelPersonal.getText());
-		
-		return telefono;
 	}
 	
 	
 	
-	public Direccion crearDireccionDesdeCampos()
+	public void setearValoresADireccionDesdeCampos(Direccion direccion)
 	{
-		Direccion direccion = new Direccion();
 		
 		direccion.setCalle(vista.textFieldDirCalle.getText());
 		direccion.setAltura(vista.textFieldDirAltura.getText());
@@ -292,14 +344,11 @@ public class VistaClienteActions implements ActionListener {
 			direccion.setProvincia(new Provincia(idProvincia));
 		}
 		
-		return direccion;
 	}
 	
 	
-	public Pasaporte crearPasaporteDesdeCampos()
-	{
-		Pasaporte pasaporte = new Pasaporte();
-		
+	public void setearValoresAPasaporteDesdeCampos(Pasaporte pasaporte)
+	{		
 		pasaporte.setNumero(vista.textFieldPasaporteNro.getText());
 		pasaporte.setAutoridadEmision(vista.textFieldPasaporteAutoridadEmis.getText());
 		
@@ -314,26 +363,29 @@ public class VistaClienteActions implements ActionListener {
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		pasaporte.setFechaEmision(LocalDate.parse(vista.textFieldPasaporteFechaEmis.getText(), dtf));
 		pasaporte.setFechVencimiento(LocalDate.parse(vista.textFieldPasaporteFechaVto.getText(), dtf));
-		
-		return pasaporte;
 	}
 	
 	
-	public PasajeroFrecuente crearPasajeroFrecuenteDesdeCampos()
+	public void setearValoresAPasajFrecuenteDesdeCampos(PasajeroFrecuente pasajFrecuente)
 	{
-		
-		PasajeroFrecuente pasajFrecuente = new PasajeroFrecuente();
-		
 		pasajFrecuente.setNumero(vista.textFieldPasajFrecNro.getText());
 		pasajFrecuente.setCategoria(vista.textFieldPasajFrecCategoria.getText());
 		
 		ComboItem item = (ComboItem)vista.comboBoxPasajFrecAerolinea.getSelectedItem();
 		pasajFrecuente.setAerolinea(new Aerolinea(item.getKey()));
-		
-		
-		return pasajFrecuente;
 	}
 	
+	
+	public void setearValoresAClienteDesdeCampos(Cliente cliente)
+	{
+		cliente.setNombreYApellido(vista.textFieldNombreYApellido.getText());
+		cliente.setDni(vista.textFieldDni.getText());
+		cliente.setEmail(vista.textFieldEmail.getText());
+		cliente.setCuitOCuil(vista.textFieldCuit.getText());
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		cliente.setFechaNacimiento(LocalDate.parse(vista.textFieldFechaNac.getText(), dtf));
+	}
 	
 	
 }

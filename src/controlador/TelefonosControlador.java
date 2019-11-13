@@ -28,7 +28,7 @@ public class TelefonosControlador {
 	
 	
 	
-	public void altaTelefono(Telefono telefono)
+	public void crearTelefono(Telefono telefono)
 	{
 		try {
 			
@@ -43,6 +43,19 @@ public class TelefonosControlador {
 		
 	}
 	
-	
+	public void actualizarTelefono(Telefono telefono)
+	{
+		try {
+			
+			ITelefonoDao telDao = TelefonoFactory.getImplementation("db");
+			telDao.actualizar(telefono);
+			telDao.close();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 }

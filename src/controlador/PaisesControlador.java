@@ -19,7 +19,7 @@ public class PaisesControlador {
 	{
 
 		try {
-			IPaisDao paisDao = PaisFactory.getImplementation("db");
+			IPaisDao paisDao = PaisFactory.getImplementation("archivo");
 			List<Pais> paises = paisDao.obtenerTodos();
 			paisDao.close();
 			

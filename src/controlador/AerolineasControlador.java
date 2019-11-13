@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dao.factory.AerolineaFactory;
+import dao.factory.AlianzaFactory;
 import dao.implementations.db.AlianzaDaoImplDB;
 import dao.interfaces.IAerolineaDao;
+import dao.interfaces.IAlianzaDao;
 import modelo.Aerolinea;
 import modelo.Alianza;
 import vista.VistaAerolinea;
@@ -61,7 +63,7 @@ public class AerolineasControlador {
 			List<Aerolinea> aerolineas = aerolineaDao.obtenerTodos();
 			aerolineaDao.close();
 			
-			AlianzaDaoImplDB alianzaDao = new AlianzaDaoImplDB();
+			IAlianzaDao alianzaDao = AlianzaFactory.getImplementation("archivo");
 			
 			
 			List<Aerolinea> aerolineasFiltradas = new ArrayList<Aerolinea>();
@@ -98,9 +100,7 @@ public class AerolineasControlador {
 			List<Aerolinea> aerolineas = aerolineaDao.obtenerTodos();
 			aerolineaDao.close();
 			
-			// Asignamos Alianza /////// MODIFICAR CON FACTORY
-			AlianzaDaoImplDB alianzaDao = new AlianzaDaoImplDB();
-			////////////////////////////////////////////////////////
+			IAlianzaDao alianzaDao = AlianzaFactory.getImplementation("archivo");
 			
 			for(Aerolinea aerolinea: aerolineas) {
 				

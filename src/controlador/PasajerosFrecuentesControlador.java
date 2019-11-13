@@ -37,5 +37,34 @@ public class PasajerosFrecuentesControlador {
 		}
 		
 	}
+
+	public void actualizarPasajeroFrecuente(PasajeroFrecuente pasajFrecuente)
+	{
+		try {
+			IPasajeroFrecuenteDao pasajFrecDao = PasajeroFrecuenteFactory.getImplementation("db");
+			pasajFrecDao.actualizar(pasajFrecuente);
+			pasajFrecDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}	
+	
+	
+	public void eliminarPasajeroFrecuente(PasajeroFrecuente pasajFrecuente)
+	{
+		try {
+			IPasajeroFrecuenteDao pasajFrecDao = PasajeroFrecuenteFactory.getImplementation("db");
+			pasajFrecDao.eliminar(pasajFrecuente);
+			pasajFrecDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 }

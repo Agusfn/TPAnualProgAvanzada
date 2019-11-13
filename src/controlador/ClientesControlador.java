@@ -3,10 +3,20 @@ package controlador;
 import java.util.List;
 
 import dao.factory.ClienteFactory;
+import dao.factory.DireccionFactory;
+import dao.factory.PasajeroFrecuenteFactory;
 import dao.factory.PasaporteFactory;
+import dao.factory.TelefonoFactory;
 import dao.interfaces.IClienteDao;
+import dao.interfaces.IDireccionDao;
+import dao.interfaces.IPasajeroFrecuenteDao;
 import dao.interfaces.IPasaporteDao;
+import dao.interfaces.ITelefonoDao;
 import modelo.Cliente;
+import modelo.Direccion;
+import modelo.PasajeroFrecuente;
+import modelo.Pasaporte;
+import modelo.Telefono;
 import vista.VistaCliente;
 import vista.VistaInicio;
 
@@ -70,6 +80,59 @@ public class ClientesControlador {
 			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
 			clienteDao.agregar(cliente);
 			clienteDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void actualizarCliente(Cliente cliente)
+	{
+		try {
+			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
+			clienteDao.actualizar(cliente);
+			clienteDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+	public void eliminarClientePorId(int id)
+	{
+		try 
+		{
+			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
+			IDireccionDao dirDao = DireccionFactory.getImplementation("db");
+			IPasajeroFrecuenteDao pasajFrecDao = PasajeroFrecuenteFactory.getImplementation("db");
+			IPasaporteDao pasaporteDao = PasaporteFactory.getImplementation("db");
+			ITelefonoDao telDao = TelefonoFactory.getImplementation("db");
+			
+			Cliente cliente = clienteDao.obtener(id);
+			
+			Direccion direccion = cliente.getDireccion();
+			Pasaporte pasaporte = cliente.getPasaporte();
+			Telefono telefono = cliente.getTelefono();
+			PasajeroFrecuente pasajFrec = cliente.getPasajeroFrecuente();
+			
+			clienteDao.eliminar(cliente); // se eliminan las relaciones FK
+			
+			dirDao.eliminar(direccion);
+			pasaporteDao.eliminar(pasaporte);
+			telDao.eliminar(telefono);
+			if(pasajFrec != null) {
+				pasajFrecDao.eliminar(pasajFrec);
+			}
+
+			clienteDao.close();
+			dirDao.close();
+			pasajFrecDao.close();
+			pasaporteDao.close();
+			telDao.close();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

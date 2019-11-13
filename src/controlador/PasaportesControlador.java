@@ -37,9 +37,23 @@ public class PasaportesControlador {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
+
 	}
+	
+	public void actualizarPasaporte(Pasaporte pasaporte)
+	{
+		try {
+			
+			IPasaporteDao pasaporteDao = PasaporteFactory.getImplementation("db");
+			pasaporteDao.actualizar(pasaporte);
+			pasaporteDao.close();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
 	
 }

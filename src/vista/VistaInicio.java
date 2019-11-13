@@ -56,7 +56,8 @@ public class VistaInicio extends JFrame {
 	public JTable tableAeropuertos;
 	public JButton btnCrearAerolinea;
 	public JButton btnModificarCliente;
-
+	public JButton btnEliminarCliente;
+	
 	/**
 	 * Create the frame.
 	 */
@@ -105,6 +106,10 @@ public class VistaInicio extends JFrame {
 		btnModificarCliente = new JButton("Modificar seleccionado");
 		btnModificarCliente.addActionListener(actions);
 		panel_1.add(btnModificarCliente);
+		
+		btnEliminarCliente = new JButton("Eliminar seleccionado");
+		btnEliminarCliente.addActionListener(actions);
+		panel_1.add(btnEliminarCliente);
 		
 		JScrollPane scrollPane_6 = new JScrollPane();
 		panel.add(scrollPane_6, BorderLayout.CENTER);

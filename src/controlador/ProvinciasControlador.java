@@ -19,11 +19,11 @@ public class ProvinciasControlador {
 	{
 
 			try {
-				IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("db");
+				IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("archivo");
 				List<Provincia> provincias = provinciaDao.obtenerTodos();
 				provinciaDao.close();
 				
-				IPaisDao paisDao = PaisFactory.getImplementation("db");
+				IPaisDao paisDao = PaisFactory.getImplementation("archivo");
 				
 				for(Provincia provincia: provincias)
 				{
@@ -52,7 +52,7 @@ public class ProvinciasControlador {
 	{
 
 			try {
-				IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("db");
+				IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("archivo");
 				List<Provincia> provincias = provinciaDao.obtenerTodos();
 				provinciaDao.close();
 				
