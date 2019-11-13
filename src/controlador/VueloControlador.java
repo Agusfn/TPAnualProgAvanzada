@@ -3,9 +3,12 @@ package controlador;
 import java.util.List;
 
 import dao.factory.AeropuertoFactory;
+import dao.factory.ClienteFactory;
 import dao.factory.VueloFactory;
 import dao.interfaces.IAeropuertoDao;
+import dao.interfaces.IClienteDao;
 import dao.interfaces.IVueloDao;
+import modelo.Cliente;
 import modelo.Vuelo;
 import vista.VistaCliente;
 import vista.VistaVuelo;
@@ -32,7 +35,17 @@ public class VueloControlador {
 		vista.setVisible(true);
 	}
 	
-	
+	public void crearVuelo(Vuelo vuelo)
+	{
+		try {
+			IVueloDao vueloDao = VueloFactory.getImplementation("db");
+			vueloDao.agregar(vuelo);
+			vueloDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	public List<Vuelo> obtenerTodos()
 		{
@@ -44,14 +57,6 @@ public class VueloControlador {
 				List<Vuelo> vuelos = vueloaDao.obtenerTodos();
 				
 				vueloaDao.close();
-				
-				
-				
-				
-				
-				
-				
-			
 				
 				IAeropuertoDao aeropuertoDao = AeropuertoFactory.getImplementation("db");
 				for(Vuelo vuelo: vuelos)

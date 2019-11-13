@@ -162,6 +162,54 @@ public class VistaVuelo extends JFrame {
 	}
 	
 	
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+
+	public JTextField getTextFieldNroVuelo() {
+		return textFieldNroVuelo;
+	}
+
+
+	public JTextField getTextFieldTiempoVueloMins() {
+		return textFieldTiempoVueloMins;
+	}
+
+
+
+	public JTextField getTextFieldFechaHoraSalida() {
+		return textFieldFechaHoraSalida;
+	}
+
+
+
+	public JTextField getTextFieldFechaHoraLlegada() {
+		return textFieldFechaHoraLlegada;
+	}
+
+
+
+
+	public JTextField getTextFieldCantidadAsientos() {
+		return textFieldCantidadAsientos;
+	}
+
+
+
+
+	public JComboBox getComboBoxAeropSalida() {
+		return comboBoxAeropSalida;
+	}
+
+
+
+
+	public JComboBox getComboBoxAeropLlegada() {
+		return comboBoxAeropLlegada;
+	}
+
+
 	public JButton getAceptarBtn()
 	{
 		return this.btnAceptar;
