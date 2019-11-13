@@ -3,11 +3,27 @@ package controlador;
 import java.util.List;
 
 import dao.factory.AerolineaFactory;
+import dao.implementations.db.AlianzaDaoImplDB;
 import dao.interfaces.IAerolineaDao;
+import dao.interfaces.IAlianzaDao;
 import modelo.Aerolinea;
+import modelo.Alianza;
+import modelo.Cliente;
+import vista.VistaAerolinea;
 
 public class AerolineasControlador {
 
+	
+	/**
+	 * Mostrar ventana para dar de alta nuevo aerolinea.
+	 */
+	public void mostrarVentanaCrear()
+	{	
+		VistaAerolinea vista = new VistaAerolinea(this);
+		vista.setVisible(true);
+	}
+	
+	
 	
 	/**
 	 * Obtener todas las aerolineas.
@@ -31,6 +47,48 @@ public class AerolineasControlador {
 		
 		
 		
+	}
+	
+	
+	
+	/**
+	 * Obtener todas las aerolineas CON ALIANZA.
+	 * @return
+	 */
+	public List<Aerolinea> obtenerTodosConAlianza()
+	{
+		try {
+			
+			IAerolineaDao aerolineaDao = AerolineaFactory.getImplementation("db");
+			List<Aerolinea> aerolineas = aerolineaDao.obtenerTodos();
+			aerolineaDao.close();
+			
+			// Asignamos Alianza /////// MODIFICAR CON FACTORY
+			AlianzaDaoImplDB alianzaDao = new AlianzaDaoImplDB();
+			////////////////////////////////////////////////////////
+			
+			for(Aerolinea aerolinea: aerolineas) {
+				
+				if (aerolinea.getAlianza() != null) {
+				
+					int id = aerolinea.getAlianza().getId();
+				
+					Alianza valorAlianza = alianzaDao.obtener(id);
+				
+					aerolinea.setAlianza(valorAlianza);
+				}
+			}
+			
+			alianzaDao.close();
+			
+			return aerolineas;
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	
