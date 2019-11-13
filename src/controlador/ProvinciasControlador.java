@@ -42,4 +42,37 @@ public class ProvinciasControlador {
 
 	}
 	
+	
+	/**
+	 * Obtener todas las provincias que corresponden a un país con id determinado
+	 * @param idPais
+	 * @return
+	 */
+	public List<Provincia> obtenerDePaisId(int idPais)
+	{
+
+			try {
+				IProvinciaDao provinciaDao = ProvinciaFactory.getImplementation("db");
+				List<Provincia> provincias = provinciaDao.obtenerTodos();
+				provinciaDao.close();
+				
+				for(Provincia provincia: provincias) {
+					if(provincia.getPais().getId() != idPais) {
+						provincias.remove(provincia);
+					}
+				}
+				
+				return provincias;
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+
+	}
+	
+	
+	
+	
 }
