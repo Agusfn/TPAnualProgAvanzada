@@ -70,7 +70,21 @@ public class VistaInicioActions implements ActionListener {
 		else if(arg0.getSource() == this.vista.btnCrearVenta) {
 			this.vista.ventasControlador.mostrarVentanaRegistrarVenta();
 		}
-		
+		else if(arg0.getSource() == this.vista.btnDetallesVenta) {
+
+			
+			int fila = vista.tableVentas.getSelectedRow();
+			
+			if(fila == -1) {
+				JOptionPane.showMessageDialog(null, "Selecciona una venta");
+				return;
+			}
+			
+			int idVenta = Integer.parseInt(vista.tableVentas.getModel().getValueAt(fila, 0).toString());
+			
+			vista.ventasControlador.mostrarVentanaDetallesVenta(idVenta);
+			
+		}
 	}
 	
 	 

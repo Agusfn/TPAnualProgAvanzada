@@ -14,6 +14,7 @@ import modelo.Aeropuerto;
 import modelo.Venta;
 import vista.VistaInicio;
 import vista.VistaVenta;
+import vista.VistaVentaDetalles;
 
 public class VentasControlador {
 
@@ -33,7 +34,47 @@ public class VentasControlador {
 	}
 	
 	
+	/**
+	 * Abre ventana con detalles de venta y carga sus datos.
+	 * @param idVenta
+	 */
+	public void mostrarVentanaDetallesVenta(int idVenta)
+	{
+		
+		try {
+			IVentaDao ventaDao = VentaFactory.getImplementation("db");
+			Venta venta = ventaDao.obtener(idVenta);
+			ventaDao.close();
+			
+			VistaVentaDetalles vista = new VistaVentaDetalles(this);
+			vista.cargarDatosVenta(venta);
+			vista.setVisible(true);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+
+	}
 	
+	
+	/**
+	 * Crear venta
+	 * @return
+	 */
+	public void crearVenta(Venta venta)
+	{
+		
+		try {
+			IVentaDao ventaDao = VentaFactory.getImplementation("db");
+			ventaDao.agregar(venta);
+			ventaDao.close();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	
 	/**

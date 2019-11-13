@@ -138,6 +138,52 @@ public class ClientesControlador {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Obtener un cliente junto con su pasaporte, a partir de su ID.
+	 * @return
+	 */
+	public Cliente obtenerConPasaporte(int id)
+	{
+		try {
+			
+			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
+			Cliente cliente = clienteDao.obtener(id);
+			clienteDao.close();
+			
+			// Asignamos pasaporte
+			IPasaporteDao pasaporteDao = PasaporteFactory.getImplementation("db");
+			cliente.setPasaporte(pasaporteDao.obtener(cliente.getPasaporte().getId()));
+			pasaporteDao.close();			
+			
+			return cliente;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	/**
+	 * Obtener listado de clientes, con pasaportes.
+	 * @return
+	 */
+	public List<Cliente> obtenerTodos()
+	{
+		try {
+			
+			IClienteDao clienteDao = ClienteFactory.getImplementation("db");
+			List<Cliente> clientes = clienteDao.obtenerTodos();
+			clienteDao.close();
+			
+			return clientes;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	
 	/**

@@ -50,6 +50,82 @@ public class VueloControlador {
 	}
 	
 	
+	
+	/**
+	 * Obtener un vuelo
+	 */
+	public Vuelo obtener(int id)
+	{
+				
+		try {
+			IVueloDao vueloDao = VueloFactory.getImplementation("db");
+			Vuelo vuelo = vueloDao.obtener(id);
+			vueloDao.close();
+		
+			return vuelo;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+			
+	}
+	
+	
+	
+	/**
+	 * Obtener todos los vuelos
+	 */
+	public List<Vuelo> obtenerTodos()
+	{
+			
+			
+		try {
+			IVueloDao vueloDao = VueloFactory.getImplementation("db");
+			List<Vuelo> vuelos = vueloDao.obtenerTodos();
+			vueloDao.close();
+			
+			return vuelos;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+			
+	}
+
+	/**
+	 * Obtener vuelo con su respectiva aerolinea y aerops de salida y llegada.
+	 */
+	public Vuelo obtenerDetallado(int idVuelo)
+	{
+	
+			try 
+			{
+				IVueloDao vueloDao = VueloFactory.getImplementation("db");
+				IAeropuertoDao aeropDao = AeropuertoFactory.getImplementation("db");
+				IAerolineaDao aerolineaDao = AerolineaFactory.getImplementation("db");
+			
+				Vuelo vuelo = vueloDao.obtener(idVuelo);
+				
+				vuelo.setAerolinea(aerolineaDao.obtener(vuelo.getAerolinea().getId()));
+				vuelo.setAeropSalida(aeropDao.obtener(vuelo.getAeropSalida().getId()));
+				vuelo.setAeropLlegada(aeropDao.obtener(vuelo.getAeropLlegada().getId()));
+
+				vueloDao.close();
+				aeropDao.close();
+				aerolineaDao.close();
+				
+				return vuelo;
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return null;
+			}
+
+	}
+	
 	/**
 	 * Obtener todos los vuelos con su respectiva aerolinea y aerops de salida y llegada.
 	 */
@@ -70,7 +146,7 @@ public class VueloControlador {
 				{
 					vuelo.setAerolinea(aerolineaDao.obtener(vuelo.getAerolinea().getId()));
 					vuelo.setAeropSalida(aeropDao.obtener(vuelo.getAeropSalida().getId()));
-					vuelo.setAeropLlegada(aeropDao.obtener(vuelo.getAeropSalida().getId()));
+					vuelo.setAeropLlegada(aeropDao.obtener(vuelo.getAeropLlegada().getId()));
 				}
 				
 				vueloDao.close();
@@ -87,7 +163,21 @@ public class VueloControlador {
 			}
 
 			
-		}
+	}
+	
+	
+	/**
+	 * Comprobar si el vuelo tiene asientos libres.
+	 * @param idVuelo
+	 * @return
+	 */
+	public boolean vueloTieneDisponibilidad(int idVuelo) {
+
+		
+		
+		
+		return true;
+	}
 	
 }
 	

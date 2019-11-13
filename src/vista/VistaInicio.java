@@ -46,7 +46,6 @@ public class VistaInicio extends JFrame {
 	
 	public JPanel contentPane;
 	public JTable tableClientes;
-	public JTextField textFieldBuscarCliente;
 	public JButton btnCrearCliente;
 	public JTable tableAerolineas;
 	public JTextField textFieldBuscarAerolinea;
@@ -59,7 +58,7 @@ public class VistaInicio extends JFrame {
 	public JButton btnModificarCliente;
 	public JButton btnEliminarCliente;
 	public JButton btnCrearVenta;
-	
+	public JButton btnDetallesVenta;
 	
 	/**
 	 * Create the frame.
@@ -98,13 +97,6 @@ public class VistaInicio extends JFrame {
 		btnCrearCliente = new JButton("Nuevo cliente");
 		btnCrearCliente.addActionListener(actions);
 		panel_1.add(btnCrearCliente);
-		
-		textFieldBuscarCliente = new JTextField();
-		panel_1.add(textFieldBuscarCliente);
-		textFieldBuscarCliente.setColumns(25);
-		
-		JButton btnBuscarCliente = new JButton("Buscar");
-		panel_1.add(btnBuscarCliente);
 		
 		btnModificarCliente = new JButton("Modificar seleccionado");
 		btnModificarCliente.addActionListener(actions);
@@ -186,8 +178,9 @@ public class VistaInicio extends JFrame {
 		btnCrearVenta.addActionListener(actions);
 		panel_10.add(btnCrearVenta);
 		
-		JButton btnDetallesVenta = new JButton("Ver detalles");
+		btnDetallesVenta = new JButton("Ver detalles");
 		panel_10.add(btnDetallesVenta);
+		btnDetallesVenta.addActionListener(actions);
 		
 		JScrollPane scrollPane_3 = new JScrollPane();
 		panel_4.add(scrollPane_3, BorderLayout.CENTER);
