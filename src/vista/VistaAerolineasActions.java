@@ -24,8 +24,7 @@ private VistaAerolinea vista;
 				if(validarFormulario) {
 					procesarEnvioFormulario();
 					
-					this.vista.aerolineasControlador.vistaInicio.recargarTablaClientes();
-					//vista.getAerolineasControlador().getVistaInicio().recargarTablaAerolineas();
+					this.vista.aerolineasControlador.vistaInicio.recargarTablaAerolineas();
 					
 					
 					vista.setVisible(false);

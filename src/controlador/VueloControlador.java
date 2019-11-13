@@ -5,12 +5,15 @@ import java.util.List;
 import dao.factory.AerolineaFactory;
 import dao.factory.AeropuertoFactory;
 import dao.factory.ClienteFactory;
+import dao.factory.VentaFactory;
 import dao.factory.VueloFactory;
 import dao.interfaces.IAerolineaDao;
 import dao.interfaces.IAeropuertoDao;
 import dao.interfaces.IClienteDao;
+import dao.interfaces.IVentaDao;
 import dao.interfaces.IVueloDao;
 import modelo.Cliente;
+import modelo.Venta;
 import modelo.Vuelo;
 import vista.VistaCliente;
 import vista.VistaVuelo;
@@ -171,12 +174,35 @@ public class VueloControlador {
 	 * @param idVuelo
 	 * @return
 	 */
-	public boolean vueloTieneDisponibilidad(int idVuelo) {
+	public boolean vueloTieneDisponibilidad(Vuelo vuelo) {
 
 		
-		
-		
-		return true;
+		try {
+			
+			IVentaDao ventaDao = VentaFactory.getImplementation("db");
+			List<Venta> ventas = ventaDao.obtenerTodos();
+			
+			
+			int ventasEnVuelo = 0;
+			
+			for(Venta venta: ventas) {
+				if(venta.getVuelo().getId() == vuelo.getId()) {
+					ventasEnVuelo ++;
+				}	
+			}
+			
+			if(ventasEnVuelo >= vuelo.getCantAsientos()) 
+				return false;
+			else
+				return true;
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 	
 }

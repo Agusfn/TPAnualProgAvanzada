@@ -39,7 +39,7 @@ public class VistaInicio extends JFrame {
 	public PaisesControlador paisesControlador = new PaisesControlador();
 	public AeropuertosControlador aeropuertosControlador = new AeropuertosControlador();
 	public ProvinciasControlador provinciasControlador = new ProvinciasControlador();
-	public AerolineasControlador aerolineaControlador = new AerolineasControlador();
+	public AerolineasControlador aerolineaControlador = new AerolineasControlador(this);
 	public VueloControlador vueloControlador = new VueloControlador();
 	public VentasControlador ventasControlador = new VentasControlador(this);
 

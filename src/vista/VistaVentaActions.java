@@ -103,7 +103,7 @@ public class VistaVentaActions implements ActionListener {
 		}
 		
 
-		if(!vista.vuelosControlador.vueloTieneDisponibilidad(idVuelo)) {
+		if(!vista.vuelosControlador.vueloTieneDisponibilidad(vuelo)) {
 			tirarError("El vuelo no tiene más disponibilidad!");
 			return false;
 		}
