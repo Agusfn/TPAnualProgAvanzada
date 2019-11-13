@@ -27,6 +27,10 @@ public class AerolineasControlador {
 		this.vistaInicio = vistaInicio;
 	}
 	
+	public VistaInicio getVistaInicio() {
+		return this.vistaInicio;
+	}
+	
 	
 	/**
 	 * Mostrar ventana para dar de alta nuevo aerolinea.

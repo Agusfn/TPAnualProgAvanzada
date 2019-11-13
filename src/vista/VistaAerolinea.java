@@ -19,9 +19,10 @@ import javax.swing.JTextField;
 
 public class VistaAerolinea extends JFrame {
 
+	public AerolineasControlador aerolineasControlador;
+	
 	public AlianzasControlador alianzasControlador = new AlianzasControlador();
 	private JPanel contentPane;
-	private AerolineasControlador aerolineasControlador;
 	private JButton btnAceptar;
 	private JComboBox comboBox_alianza;
 	
@@ -47,6 +48,7 @@ public class VistaAerolinea extends JFrame {
 	public VistaAerolinea(AerolineasControlador aerolineasControlador) {
 		
 		this.aerolineasControlador = aerolineasControlador;
+		
 		VistaAerolineasActions actions = new VistaAerolineasActions(this);
 		
 		setResizable(false);
